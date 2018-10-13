@@ -199,7 +199,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-        // Reset errors....
+        // Reset errors.......
         mEmailView.setError(null);
         mPasswordView.setError(null);
 
