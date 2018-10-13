@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1064635926179",
+    "firebase_url": "https://prowling-rumba.firebaseio.com",
+    "project_id": "prowling-rumba",
+    "storage_bucket": "prowling-rumba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1064635926179:android:98007a0a48e1dc6e",
+        "android_client_info": {
+          "package_name": "com.rumba.prowling"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1064635926179-ag5a59q5a004a451optdl9kjbdf489dq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rumba.prowling",
+            "certificate_hash": "bc85dec4981d92c02761af620619d6d9da7db5e6"
+          }
+        },
+        {
+          "client_id": "1064635926179-cpek07u12bsrktspgmgp1jg2j5b54sao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8wnJnZwPk1n38EtHKaAOTXU-n7Y-F4_4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1064635926179-cpek07u12bsrktspgmgp1jg2j5b54sao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
