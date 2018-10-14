@@ -19,7 +19,5 @@ public class MatchActivity extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        TextView btnlogout = (TextView) view.findViewById(R.id.textView2);
-        btnlogout.setText("tot be");
     };
 }

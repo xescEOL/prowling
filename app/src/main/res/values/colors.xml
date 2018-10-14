@@ -9,4 +9,5 @@
     <color name="colorGris">#454545</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTrans">#96a6a6a6</color>
+    <color name="colorWhiteGrey">#adffffff</color>
 </resources>

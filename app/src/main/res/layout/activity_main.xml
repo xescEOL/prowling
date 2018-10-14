@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -10,11 +12,29 @@
         android:background="@color/colorThird"
         android:orientation="vertical">
 
-        <TabWidget
-            android:id="@android:id/tabs"
-            android:layout_width="fill_parent"
-            android:layout_height="60dip"
-            android:background="@color/colorThird" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="7">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:paddingTop="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/prowlinglogoorange" />
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="42dip"
+                android:layout_weight="3"
+                android:background="@color/colorThird"
+                android:paddingRight="9dp" />
+        </LinearLayout>
 
         <FrameLayout
             android:id="@android:id/tabcontent"
