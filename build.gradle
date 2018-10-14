@@ -11,8 +11,8 @@ buildscript {
         classpath 'com.google.android.gms:play-services-analytics:16.0.4'
         classpath 'com.google.android.gms:play-services-tagmanager:16.0.4'
 
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.google.gms:google-services:3.2.1'
         
 
         // NOTE: Do not place your application dependencies here; they belong

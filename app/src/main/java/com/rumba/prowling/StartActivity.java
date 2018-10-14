@@ -64,8 +64,8 @@ public class StartActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    //Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                    Toast.makeText(StartActivity.this, "Ya esta logueado.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    startActivity(intent);
 
                 } else {
                     // User is signed out

@@ -18,4 +18,8 @@
         <item name="colorControlHighlight">@color/colorPrimary</item>
     </style>
 
+    <style name="TabText">
+        <item name="android:textColor">@drawable/tabwidget_match</item>
+    </style>
+
 </resources>
