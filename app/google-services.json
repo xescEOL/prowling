@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1064635926179-2omhnqfinoks97gevbs00dcv5636atfu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rumba.prowling",
+            "certificate_hash": "574b44dceab8cb0e475c38c0156450ccab072e40"
+          }
+        },
+        {
           "client_id": "1064635926179-cpek07u12bsrktspgmgp1jg2j5b54sao.apps.googleusercontent.com",
           "client_type": 3
         }

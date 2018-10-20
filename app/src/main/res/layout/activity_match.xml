@@ -38,6 +38,21 @@
                 android:gravity="bottom"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:id="@+id/viewPg"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <ImageView
+                        android:id="@+id/imgMatchTransp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="50dp"
+                        android:src="@drawable/match_agree_nofx"
+                        android:visibility="invisible"
+                        app:srcCompat="@drawable/match_agree_nofx" />
+                </RelativeLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,7 +121,8 @@
                         android:paddingRight="15dp"
                         android:text="Cesc Miralles, 31"
                         android:textColor="@color/colorThird"
-                        android:textSize="24sp" />
+                        android:textSize="24sp"
+                        android:typeface="normal" />
                 </LinearLayout>
 
                 <TextView
@@ -158,26 +174,48 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:weightSum="5">
 
             <ImageView
                 android:id="@+id/imageView10"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="20"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:scaleType="fitCenter"
                 android:src="@drawable/match_powerlove_nofx" />
 
-            <TextView
-                android:id="@+id/textView6"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:text="50%"
-                android:textAlignment="center"
-                android:textColor="@color/colorGris" />
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical|center"
+                android:layout_weight="2">
+
+                <ImageView
+                    android:id="@+id/imageView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="20dp"
+                    android:paddingTop="19dp"
+                    android:paddingEnd="18dp"
+                    android:paddingBottom="19dp"
+                    android:src="@drawable/match_battery"
+                    app:srcCompat="@drawable/match_battery" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="50%"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </FrameLayout>
+
         </LinearLayout>
 
         <ImageView
@@ -198,7 +236,7 @@
             android:paddingTop="28dp"
             android:paddingBottom="28dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/historial_nofx" />
+            android:src="@drawable/match_info" />
     </LinearLayout>
 
 </LinearLayout>

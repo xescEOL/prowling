@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/tabhost"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    android:background="@color/colorWhite">
 
     <LinearLayout
+        android:id="@+id/linearLayoutMain"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@color/colorThird"

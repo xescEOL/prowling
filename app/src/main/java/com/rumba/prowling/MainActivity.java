@@ -1,15 +1,22 @@
 package com.rumba.prowling;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity {
 
@@ -28,18 +35,23 @@ public class MainActivity extends FragmentActivity {
     private Fragment fragment3;
     private Fragment fragment4;
 
+    private boolean isTouch = false;
+    public Integer xCordTouch = null;
+    public Integer yCordTouch = null;
+    public float transp = 0;
+    public int tipoMatch = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         fragment1 = new MatchActivity();
         fragment2 = new LocationActivity();
         fragment3 = new ChatActivity();
         fragment4 = new ConfActivity();
-
-
 
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setOnTabChangedListener(listener);
@@ -134,11 +146,77 @@ public class MainActivity extends FragmentActivity {
         return view;
     }
 
-    public static void tabfresh() {
-        mTabHost.setCurrentTab(0);
-    }
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        RelativeLayout linear = (RelativeLayout)findViewById(R.id.viewPg);
+        ImageView matchIMG = (ImageView) findViewById(R.id.imgMatchTransp);
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
+        wm.getDefaultDisplay().getMetrics(dm);
+        int screenWidth = dm.widthPixels;
+        int screenHeight = dm.heightPixels;
 
-    public static void tabfresh_sal() {
-        mTabHost.setCurrentTab(1);
+        int X = (int) event.getX();
+        int Y = (int) event.getY();
+        int eventaction = event.getAction();
+
+        switch (eventaction) {
+            case MotionEvent.ACTION_DOWN:
+                xCordTouch = X;
+                yCordTouch = Y;
+                isTouch = true;
+                break;
+
+            case MotionEvent.ACTION_MOVE:
+                if(xCordTouch < X && tipoMatch!=2 && (X-xCordTouch)>((screenHeight-Y)-yCordTouch)) {
+                    tipoMatch = 1;
+                    transp = ((float) X / (float) screenWidth) * 200;
+                    String hex = Integer.toHexString((int) transp-55);
+                    if(transp > 160){
+                        matchIMG.setImageResource(R.drawable.match_agree_nofx);
+                        matchIMG.setVisibility(View.VISIBLE);
+                    }else{
+                        matchIMG.setVisibility(View.INVISIBLE);
+                    }
+                    try {
+                        linear.setBackgroundColor(Color.parseColor("#" + hex + "4CC700"));
+                    } catch (Exception e) {
+                        linear.setBackgroundColor(Color.parseColor("#00000000"));
+                    }
+                }else if(xCordTouch > X && tipoMatch!=1 && (X-xCordTouch)<((screenHeight-Y)-yCordTouch)){
+                    tipoMatch = 2;
+                    transp = (1 - ((float) X / (float) screenWidth)) * 200;
+                    String hex = Integer.toHexString((int) transp-55);
+                    if(transp > 150){
+                        matchIMG.setImageResource(R.drawable.match_noagree_nofx);
+                        matchIMG.setVisibility(View.VISIBLE);
+                    }else{
+                        matchIMG.setVisibility(View.INVISIBLE);
+                    }
+                    try {
+                        linear.setBackgroundColor(Color.parseColor("#" + hex + "C60000"));
+                    } catch (Exception e) {
+                        linear.setBackgroundColor(Color.parseColor("#00000000"));
+                    }
+                }else if(xCordTouch > X && tipoMatch==1){
+                    linear.setBackgroundColor(Color.parseColor("#00000000"));
+                }else if(xCordTouch < X && tipoMatch==2){
+                    linear.setBackgroundColor(Color.parseColor("#00000000"));
+                }
+                break;
+
+            case MotionEvent.ACTION_UP:
+                linear.setBackgroundColor(Color.parseColor("#00000000"));
+                tipoMatch = 0;
+                matchIMG.setVisibility(View.INVISIBLE);
+                if (xCordTouch > X) {
+                    //Toast.makeText(MainActivity.this, "LEFT "+X, Toast.LENGTH_SHORT).show();
+                } else{
+                    //Toast.makeText(MainActivity.this, "RIGHT "+X, Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
+        return true;
     }
 }
