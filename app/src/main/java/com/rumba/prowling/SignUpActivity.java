@@ -3,6 +3,7 @@ package com.rumba.prowling;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -48,6 +49,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.rumba.functions.DBFunctions;
+
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -60,7 +63,8 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
      */
     private static final int REQUEST_READ_CONTACTS = 0;
     private FirebaseAuth mAuth;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private DBFunctions dbFunc = new DBFunctions();
+
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -129,39 +133,21 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
-                            //Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-
-                            // Create a new user with a first and last name
                             Map<String, Object> userDB = new HashMap<>();
                             userDB.put("Name", mNameView.getText().toString());
-
-                            // Add a new document with a generated ID
-                            db.collection("users").document(user.getUid())
-                                    .set(userDB)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            Toast.makeText(SignUpActivity.this, "DocumentSnapshot added with ID", Toast.LENGTH_SHORT).show();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            Toast.makeText(SignUpActivity.this, "Error adding document", Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-
-
-                            //updateUI(user);
+                            
+                            if(dbFunc.SignUpUserDB(userDB, user.getUid())){
+                                Toast.makeText(SignUpActivity.this, "Error SignUp",Toast.LENGTH_SHORT).show();
+                            }
+                            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                            startActivity(intent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.
-                            //Log.w(TAG, "createUserWithEmail:failure", task.getException());
                             Toast.makeText(SignUpActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
                         }
 
                     }

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.Toast;
@@ -148,7 +149,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        RelativeLayout linear = (RelativeLayout)findViewById(R.id.viewPg);
+        LinearLayout linear = (LinearLayout)findViewById(R.id.linearLayoutMatch);
         ImageView matchIMG = (ImageView) findViewById(R.id.imgMatchTransp);
         DisplayMetrics dm = new DisplayMetrics();
         WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut

@@ -66,6 +66,7 @@ public class StartActivity extends AppCompatActivity {
                     // User is signed in
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
 
                 } else {
                     // User is signed out
