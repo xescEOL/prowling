@@ -102,7 +102,7 @@
                         android:paddingStart="10dp">
 
                         <ImageView
-                            android:id="@+id/imageView3"
+                            android:id="@+id/imgLang1"
                             android:layout_width="25dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -111,7 +111,7 @@
                             android:src="@drawable/flag_catalunya" />
 
                         <ImageView
-                            android:id="@+id/imageView4"
+                            android:id="@+id/imgLang2"
                             android:layout_width="25dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -120,7 +120,7 @@
                             android:src="@drawable/flag_spain" />
 
                         <ImageView
-                            android:id="@+id/imageView5"
+                            android:id="@+id/imgLang3"
                             android:layout_width="25dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -129,7 +129,7 @@
                             android:src="@drawable/flag_italy" />
 
                         <ImageView
-                            android:id="@+id/imageView6"
+                            android:id="@+id/imgLang4"
                             android:layout_width="25dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -138,7 +138,7 @@
                             android:src="@drawable/flag_germany" />
 
                         <ImageView
-                            android:id="@+id/imageView8"
+                            android:id="@+id/imgLang5"
                             android:layout_width="25dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
@@ -190,7 +190,7 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/imageView7"
+            android:id="@+id/imgButtonList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -200,7 +200,7 @@
             android:src="@drawable/historial_nofx" />
 
         <ImageView
-            android:id="@+id/imageView11"
+            android:id="@+id/imgButtonDislike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -217,7 +217,7 @@
             android:weightSum="5">
 
             <ImageView
-                android:id="@+id/imageView10"
+                android:id="@+id/imgButtonSuper"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
@@ -231,7 +231,7 @@
                 android:layout_weight="2">
 
                 <ImageView
-                    android:id="@+id/imageView13"
+                    android:id="@+id/imgBattery"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:paddingStart="20dp"
@@ -242,7 +242,7 @@
                     app:srcCompat="@drawable/match_battery" />
 
                 <TextView
-                    android:id="@+id/textView6"
+                    android:id="@+id/txtPercent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -258,7 +258,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView9"
+            android:id="@+id/imgButtonLike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -268,7 +268,7 @@
             android:src="@drawable/match_agree_nofx" />
 
         <ImageView
-            android:id="@+id/imageView12"
+            android:id="@+id/imgButtonInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -283,7 +283,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="visible">
 
         <ProgressBar
             android:id="@+id/progressBar"
