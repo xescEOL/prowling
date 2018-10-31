@@ -3,6 +3,8 @@ package com.rumba.prowling;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -33,6 +35,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.ui.idp.SingleSignInActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -123,10 +126,11 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
 
     }
 
-    private void createAccount(String email, String password) {
+    private void createAccount(String email, String password, Context cont) {
         //Log.d(TAG, "createAccount:" + email);
 
         // [START create_user_with_email]
+        final Context context = cont;
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -137,6 +141,15 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
 
                             Map<String, Object> userDB = new HashMap<>();
                             userDB.put("Name", mNameView.getText().toString());
+                            userDB.put("SmallDesc", "_null#");
+                            userDB.put("Photo1", "_null#");
+                            userDB.put("Photo2", "_null#");
+                            userDB.put("Photo3", "_null#");
+                            userDB.put("Photo4", "_null#");
+                            userDB.put("Photo5", "_null#");
+                            userDB.put("Photo6", "_null#");
+                            dbFunc.SaveLocation(context);
+
                             
                             if(dbFunc.SignUpUserDB(userDB, user.getUid())){
                                 Toast.makeText(SignUpActivity.this, "Error SignUp",Toast.LENGTH_SHORT).show();
@@ -394,7 +407,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
             showProgress(false);
 
             if (success) {
-                createAccount(mEmailView.getText().toString(), mPasswordView.getText().toString());
+                createAccount(mEmailView.getText().toString(), mPasswordView.getText().toString(), getApplicationContext());
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

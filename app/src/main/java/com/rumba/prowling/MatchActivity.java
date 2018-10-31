@@ -1,5 +1,6 @@
 package com.rumba.prowling;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -48,7 +49,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.content.Context.LOCATION_SERVICE;
 
 public class MatchActivity extends Fragment {
     private DBFunctions dbFunc = new DBFunctions();
@@ -56,8 +56,9 @@ public class MatchActivity extends Fragment {
     ImageView matchIMG, photoRight, photoLeft, buttonLike, buttonDislike, buttonSuperLike;
     TextView numPhoto, nameProfile, smallDesc;
     LinearLayout photoMatch, buttonsMatch, progressBar;
-    String uIDmatch;
     List<userprofile> listUsers = new ArrayList<>(30);
+    String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
 
 
 
@@ -89,43 +90,150 @@ public class MatchActivity extends Fragment {
         progressBar = (LinearLayout) getActivity().findViewById(R.id.linearLayoutProgressMatch);
 
 
-        Glide.with(this /* context */)
-                .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho1.jpg?alt=media&token=2b31300a-98ed-4f34-a55b-66e2fa4ba91f")
-                .into(matchIMG);
+
+
 
         photoRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numPhoto.getText().equals("1/6")) {
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho1.jpg?alt=media&token=2b31300a-98ed-4f34-a55b-66e2fa4ba91f")
-                            .into(matchIMG);
-                    numPhoto.setText("2/6");
-                }else if (numPhoto.getText().equals("2/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho2.jpg?alt=media&token=eb5b06b3-72cc-4914-b139-6b75d6aaa5a4")
-                            .into(matchIMG);
-                    numPhoto.setText("3/6");
-                }else if (numPhoto.getText().equals("3/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho3.jpg?alt=media&token=757b5741-dba4-41ca-b48c-9e781cff7944")
-                            .into(matchIMG);
-                    numPhoto.setText("4/6");
-                }else if (numPhoto.getText().equals("4/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho5.jpg?alt=media&token=8a734d00-c165-4435-a2d8-a7005497b5e1")
-                            .into(matchIMG);
-                    numPhoto.setText("5/6");
-                }else if (numPhoto.getText().equals("5/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho4.jpg?alt=media&token=a84fdad2-42bc-4adc-b898-724fe04750b4")
-                            .into(matchIMG);
-                    numPhoto.setText("6/6");
-                }else if (numPhoto.getText().equals("6/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho6.jpg?alt=media&token=f8447a10-3846-487d-9ab2-59b172743ef4")
-                            .into(matchIMG);
-                    numPhoto.setText("1/6");
+                switch (numPhoto.getText().toString()) {
+                    case "1/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/6");
+                        break;
+                    case "1/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/5");
+                        break;
+                    case "1/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/4");
+                        break;
+                    case "1/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/3");
+                        break;
+                        case "1/2":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/2");
+                        break;
+                    case "1/1":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/1");
+                        break;
+
+                    case "2/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/6");
+                        break;
+                    case "2/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/5");
+                        break;
+                    case "2/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/4");
+                        break;
+                    case "2/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/3");
+                        break;
+                    case "2/2":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/2");
+                        break;
+
+                    case "3/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/6");
+                        break;
+                    case "3/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/5");
+                        break;
+                    case "3/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/4");
+                        break;
+                    case "3/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/3");
+                        break;
+
+                    case "4/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto5().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("5/6");
+                        break;
+                    case "4/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto5().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("5/5");
+                        break;
+                    case "4/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/4");
+                        break;
+
+                    case "5/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto6().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("6/6");
+                        break;
+                    case "5/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/5");
+                        break;
+
+                    case "6/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/6");
+                        break;
+                        default:
+                            Glide.with(getContext() /* context */)
+                                    .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                    .into(matchIMG);
+                            numPhoto.setText("1/1");
+                            break;
                 }
             }
         });
@@ -133,36 +241,144 @@ public class MatchActivity extends Fragment {
         photoLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(numPhoto.getText().equals("3/6")) {
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho1.jpg?alt=media&token=2b31300a-98ed-4f34-a55b-66e2fa4ba91f")
-                            .into(matchIMG);
-                    numPhoto.setText("2/6");
-                }else if (numPhoto.getText().equals("4/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho2.jpg?alt=media&token=eb5b06b3-72cc-4914-b139-6b75d6aaa5a4")
-                            .into(matchIMG);
-                    numPhoto.setText("3/6");
-                }else if (numPhoto.getText().equals("5/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho3.jpg?alt=media&token=757b5741-dba4-41ca-b48c-9e781cff7944")
-                            .into(matchIMG);
-                    numPhoto.setText("4/6");
-                }else if (numPhoto.getText().equals("6/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho5.jpg?alt=media&token=8a734d00-c165-4435-a2d8-a7005497b5e1")
-                            .into(matchIMG);
-                    numPhoto.setText("5/6");
-                }else if (numPhoto.getText().equals("1/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho4.jpg?alt=media&token=a84fdad2-42bc-4adc-b898-724fe04750b4")
-                            .into(matchIMG);
-                    numPhoto.setText("6/6");
-                }else if (numPhoto.getText().equals("2/6")){
-                    Glide.with(getContext() /* context */)
-                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2Fpho6.jpg?alt=media&token=f8447a10-3846-487d-9ab2-59b172743ef4")
-                            .into(matchIMG);
-                    numPhoto.setText("1/6");
+                switch (numPhoto.getText().toString()) {
+                    case "1/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto6().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("6/6");
+                        break;
+                    case "1/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto5().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("5/5");
+                        break;
+                    case "1/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/4");
+                        break;
+                    case "1/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/3");
+                        break;
+                    case "1/2":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/2");
+                        break;
+                    case "1/1":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/1");
+                        break;
+
+                    case "2/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/6");
+                        break;
+                    case "2/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/5");
+                        break;
+                    case "2/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/4");
+                        break;
+                    case "2/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/3");
+                        break;
+                    case "2/2":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/2");
+                        break;
+
+                    case "3/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/6");
+                        break;
+                    case "3/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/5");
+                        break;
+                    case "3/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/4");
+                        break;
+                    case "3/3":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto2().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("2/3");
+                        break;
+
+                    case "4/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/6");
+                        break;
+                    case "4/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/5");
+                        break;
+                    case "4/4":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto3().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("3/4");
+                        break;
+
+                    case "5/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/6");
+                        break;
+                    case "5/5":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto4().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("4/5");
+                        break;
+
+                    case "6/6":
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto5().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("5/6");
+                        break;
+                    default:
+                        Glide.with(getContext() /* context */)
+                                .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                .into(matchIMG);
+                        numPhoto.setText("1/1");
+                        break;
                 }
             }
         });
@@ -175,21 +391,73 @@ public class MatchActivity extends Fragment {
                 docData.put("Date", "20181031");
 // Add a new document (asynchronously) in collection "cities" with id "LA"
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document("HcMoRe2ej2h0IeLvj60nzKsHe7t1").collection("Matches").document(listUsers.get(listUsers.size()-1).getId().toString()).set(docData);
-                System.out.println("guardando datooos!");
+                db.collection("users").document(uid).collection("Matches").document(listUsers.get(listUsers.size()-1).getId().toString()).set(docData);
+                listUsers.remove(listUsers.size()-1);
+                if(listUsers.size()>0) {
+                    smallDesc.setText(listUsers.get(listUsers.size() - 1).getSmallDesc().toString());
+                    nameProfile.setText(listUsers.get(listUsers.size() - 1).getName().toString());
+                    if(!listUsers.get(listUsers.size() - 1).getPhoto6().toString().equals("_null#")){
+                        numPhoto.setText("1/6");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto5().toString().equals("_null#")){
+                        numPhoto.setText("1/5");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto4().toString().equals("_null#")){
+                        numPhoto.setText("1/4");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto3().toString().equals("_null#")){
+                        numPhoto.setText("1/3");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto2().toString().equals("_null#")){
+                        numPhoto.setText("1/2");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto1().toString().equals("_null#")){
+                        numPhoto.setText("1/1");
+                    }
+                    Glide.with(getContext())
+                            .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                            .into(matchIMG);
+                }else{
+                    photoMatch.setVisibility(View.GONE);
+                    buttonsMatch.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
             }});
 
         buttonDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Map<String, Object> docData = new HashMap<>();
+                docData.put("Tipo", 0);
+                docData.put("Date", "20181031");
+// Add a new document (asynchronously) in collection "cities" with id "LA"
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(uid).collection("Matches").document(listUsers.get(listUsers.size()-1).getId().toString()).set(docData);
+                listUsers.remove(listUsers.size()-1);
+                if(listUsers.size()>0) {
+                    smallDesc.setText(listUsers.get(listUsers.size() - 1).getSmallDesc().toString());
+                    nameProfile.setText(listUsers.get(listUsers.size() - 1).getName().toString());
+                    if(!listUsers.get(listUsers.size() - 1).getPhoto6().toString().equals("_null#")){
+                        numPhoto.setText("1/6");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto5().toString().equals("_null#")){
+                        numPhoto.setText("1/5");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto4().toString().equals("_null#")){
+                        numPhoto.setText("1/4");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto3().toString().equals("_null#")){
+                        numPhoto.setText("1/3");
+                    }else if(!listUsers.get(listUsers.size() - 1).getPhoto2().toString().equals("_null#")){
+                        numPhoto.setText("1/2");
+                    }else {
+                        numPhoto.setText("1/1");
+                    }
+                    Glide.with(getContext())
+                            .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                            .into(matchIMG);
+                }else{
+                    photoMatch.setVisibility(View.GONE);
+                    buttonsMatch.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.VISIBLE);
+                }
             }});
 
         dbFunc.SaveLocation(getContext());
 
-        photoMatch.setVisibility(View.VISIBLE);
-        buttonsMatch.setVisibility(View.VISIBLE);
-        progressBar.setVisibility(View.GONE);
+
 
         CollectionReference geoFirestoreRef = FirebaseFirestore.getInstance().collection("users");
         GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
@@ -209,6 +477,25 @@ public class MatchActivity extends Fragment {
                                 System.out.println("DocumentSnapshot data: " + listUsers.get(listUsers.size()-1).getId().toString());
                                 smallDesc.setText(listUsers.get(listUsers.size()-1).getSmallDesc().toString());
                                 nameProfile.setText(listUsers.get(listUsers.size()-1).getName().toString());
+                                if(!listUsers.get(listUsers.size() - 1).getPhoto6().toString().equals("_null#")){
+                                    numPhoto.setText("1/6");
+                                }else if(!listUsers.get(listUsers.size() - 1).getPhoto5().toString().equals("_null#")){
+                                    numPhoto.setText("1/5");
+                                }else if(!listUsers.get(listUsers.size() - 1).getPhoto4().toString().equals("_null#")){
+                                    numPhoto.setText("1/4");
+                                }else if(!listUsers.get(listUsers.size() - 1).getPhoto3().toString().equals("_null#")){
+                                    numPhoto.setText("1/3");
+                                }else if(!listUsers.get(listUsers.size() - 1).getPhoto2().toString().equals("_null#")){
+                                    numPhoto.setText("1/2");
+                                }else {
+                                    numPhoto.setText("1/1");
+                                }
+                                Glide.with(getContext())
+                                        .load(listUsers.get(listUsers.size() - 1).getPhoto1().toString())
+                                        .into(matchIMG);
+                                photoMatch.setVisibility(View.VISIBLE);
+                                buttonsMatch.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.GONE);
                             } else {
                                 System.out.println("No such document");
                             }

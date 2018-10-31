@@ -34,7 +34,7 @@ public class DBFunctions extends Thread{
     Bitmap bitmapRet;
     FirebaseStorage storage;
     StorageReference storageRef;
-    FirebaseUser user3 = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     boolean exit;
 
@@ -59,7 +59,7 @@ public class DBFunctions extends Thread{
             GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
             errCode = false;
             try {
-                geoFirestore.setLocation(user3.getUid(), new GeoPoint(gps.latitude, gps.longitude), new GeoFirestore.CompletionListener() {
+                geoFirestore.setLocation(user.getUid(), new GeoPoint(gps.latitude, gps.longitude), new GeoFirestore.CompletionListener() {
                     @Override
                     public void onComplete(Exception exception) {
 
