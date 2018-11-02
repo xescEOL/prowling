@@ -210,7 +210,15 @@ public class MainActivity extends FragmentActivity {
                 linear.setBackgroundColor(Color.parseColor("#00000000"));
                 tipoMatch = 0;
                 matchIMG.setVisibility(View.INVISIBLE);
-                if (xCordTouch > X) {
+                if (transp > 150) {
+                    if(xCordTouch > X && tipoMatch!=1 && (X-xCordTouch)<((screenHeight-Y)-yCordTouch))
+                    {
+                        ImageView buttonDislike = (ImageView) findViewById(R.id.imgButtonDislike);
+                        buttonDislike.performClick();
+                    }else{
+                        ImageView buttonLike = (ImageView) findViewById(R.id.imgButtonLike);
+                        buttonLike.performClick();
+                    }
                     //Toast.makeText(MainActivity.this, "LEFT "+X, Toast.LENGTH_SHORT).show();
                 } else{
                     //Toast.makeText(MainActivity.this, "RIGHT "+X, Toast.LENGTH_SHORT).show();

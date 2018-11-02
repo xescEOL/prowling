@@ -8,10 +8,11 @@ public class userprofile {
 
     String id, name, smallDesc, photo1, photo2, photo3, photo4, photo5, photo6;
     String localitation;
+    long lastCon;
 
     public userprofile(){}
 
-    public userprofile(String id, String name, String location, String smallDesc, String photo1, String photo2, String photo3, String photo4, String photo5, String photo6) {
+    public userprofile(String id, String name, String location, String smallDesc, String photo1, String photo2, String photo3, String photo4, String photo5, String photo6, long lastCon) {
         this.id = id;
         this.name = name;
         this.localitation = location;
@@ -22,6 +23,7 @@ public class userprofile {
         this.photo4 = photo4;
         this.photo5 = photo5;
         this.photo6 = photo6;
+        this.lastCon = lastCon;
     }
 
     public userprofile(String all) {
@@ -108,4 +110,11 @@ public class userprofile {
         this.localitation = localitation;
     }
 
+    public long getLastCon() {
+        return lastCon;
+    }
+
+    public void setLastCon(long lastCon) {
+        this.lastCon = lastCon;
+    }
 }
