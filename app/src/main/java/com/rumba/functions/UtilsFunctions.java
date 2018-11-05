@@ -4,6 +4,9 @@ import android.content.Context;
 
 import com.rumba.objects.userprofile;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class UtilsFunctions {
@@ -18,5 +21,18 @@ public class UtilsFunctions {
             }
         }
         return returnInteger;
+    }
+
+    public String getDateHourMinuteSecNow() {
+        String returnString = "201812010000";
+        java.util.Date fecha = new Date();
+        Date date = new Date();
+        DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        try {
+            returnString = hourFormat.format(date);
+        }catch (Exception e){
+
+        }
+        return returnString;
     }
 }

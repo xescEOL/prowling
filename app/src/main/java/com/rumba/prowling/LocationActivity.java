@@ -16,6 +16,6 @@ public class LocationActivity extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("LocationActivity class - activity_location");
     };
 }

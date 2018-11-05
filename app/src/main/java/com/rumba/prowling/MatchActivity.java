@@ -93,11 +93,7 @@ public class MatchActivity extends Fragment {
         buttonsMatch = (LinearLayout) getActivity().findViewById(R.id.linearLayoutButtons);
         progressBar = (LinearLayout) getActivity().findViewById(R.id.linearLayoutProgressMatch);
         LinearLayout linear = (LinearLayout)getActivity().findViewById(R.id.linearLayoutMatch);
-
-
-
-
-
+        System.out.println("MatchActivity class - activity_match");
 
         photoRight.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -35,9 +35,13 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.rumba.functions.UtilsFunctions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static android.Manifest.permission.READ_CONTACTS;
@@ -48,11 +52,13 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class StartActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private UtilsFunctions utilsFunc = new UtilsFunctions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+        System.out.println("StartActivity class - activity_start");
 
         Button btnLogin = (Button)findViewById(R.id.login);
         Button btnSignUp = (Button)findViewById(R.id.signup);
@@ -66,8 +72,12 @@ public class StartActivity extends AppCompatActivity {
                     // User is signed in
                     Intent intent = new Intent(StartActivity.this, MainActivity.class);
                     startActivity(intent);
+                    Map<String, Object> docData = new HashMap<>();
+                    docData.put("LastConnection", utilsFunc.getDateHourMinuteSecNow());
+                    // Add a new document (asynchronously) in collection "cities" with id "LA"
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("users").document(user.getUid()).update(docData);
                     finish();
-
                 } else {
                     // User is signed out
                     //Log.d(TAG, "onAuthStateChanged:signed_out");

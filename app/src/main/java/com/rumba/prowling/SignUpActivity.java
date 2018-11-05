@@ -53,6 +53,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.rumba.functions.DBFunctions;
+import com.rumba.functions.UtilsFunctions;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -67,7 +68,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
     private static final int REQUEST_READ_CONTACTS = 0;
     private FirebaseAuth mAuth;
     private DBFunctions dbFunc = new DBFunctions();
-
+    private UtilsFunctions utilsFunc = new UtilsFunctions();
 
     /**
      * A dummy authentication store containing known user names and passwords.
@@ -93,6 +94,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
         setContentView(R.layout.activity_signup);
         mAuth = FirebaseAuth.getInstance();
         FirebaseApp.initializeApp(this);
+        System.out.println("SignUpActivity class - activity_signup");
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         mNameView = (AutoCompleteTextView) findViewById(R.id.name);
@@ -148,6 +150,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                             userDB.put("Photo4", "_null#");
                             userDB.put("Photo5", "_null#");
                             userDB.put("Photo6", "_null#");
+                            userDB.put("LastConnection", utilsFunc.getDateHourMinuteSecNow());
                             dbFunc.SaveLocation(context);
 
                             

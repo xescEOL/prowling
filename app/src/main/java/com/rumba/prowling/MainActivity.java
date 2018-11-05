@@ -47,7 +47,7 @@ public class MainActivity extends FragmentActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        System.out.println("MainActivity class - activity_main");
 
         fragment1 = new MatchActivity();
         fragment2 = new LocationActivity();

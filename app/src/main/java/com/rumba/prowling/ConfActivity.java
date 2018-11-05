@@ -20,6 +20,7 @@ public class ConfActivity extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("ConfActivity class - activity_conf");
         Button btnlogout = (Button) view.findViewById(R.id.btnLogout);
 
         btnlogout.setOnClickListener(new View.OnClickListener() {

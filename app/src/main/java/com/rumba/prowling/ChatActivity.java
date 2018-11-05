@@ -19,6 +19,6 @@ public class ChatActivity extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        System.out.println("ChatActivity class - activity_chat");
     };
 }
