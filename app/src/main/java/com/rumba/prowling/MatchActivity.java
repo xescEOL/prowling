@@ -388,6 +388,24 @@ public class MatchActivity extends Fragment {
         buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                DocumentReference docRef = db.collection("users").document(listUsers.get(indexElementCurrentUser).getId().toString()).collection("Matches").document(uid);
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document != null) {
+                                try {
+                                    if (Integer.parseInt(task.getResult().getData().get("Tipo").toString()) == 1) {
+                                        System.out.println("MAAAATCH");
+                                        Toast.makeText(getContext(), "MAAAAATCH!!!!", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+                        }
+                    }});
                 LinearLayout linear = (LinearLayout)getActivity().findViewById(R.id.linearLayoutMatch);
                 String hex = Integer.toHexString((int) 145);
                 linear.setBackgroundColor(Color.parseColor("#" + hex + "4CC700"));
@@ -398,8 +416,8 @@ public class MatchActivity extends Fragment {
                 docData.put("Tipo", 1);
                 docData.put("Date", "20181031");
                 // Add a new document (asynchronously) in collection "cities" with id "LA"
-                FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(uid).collection("Matches").document(listUsers.get(indexElementCurrentUser).getId().toString()).set(docData);
+                FirebaseFirestore db2 = FirebaseFirestore.getInstance();
+                db2.collection("users").document(uid).collection("Matches").document(listUsers.get(indexElementCurrentUser).getId().toString()).set(docData);
                 listUsers.remove(indexElementCurrentUser);
                 indexElementCurrentUser = utilsFunc.lastConnectionIndex(listUsers);
                 //pausamos 4 decimas para que se vea lo que hemos escogido (foto con marca de agua roja)
@@ -493,8 +511,8 @@ public class MatchActivity extends Fragment {
                 }.start();
             }});
 
-        dbFunc.SaveLocation(getContext());
-
+        //dbFunc.SaveLocation(getContext());
+// OJOOOOOOOOOOOOOOOOO  LA FUNCIO ANTERIOR BORRA LES ALTRES DADES!!! SHA DE MIRAR!!!!!! <-------
 
 
 
