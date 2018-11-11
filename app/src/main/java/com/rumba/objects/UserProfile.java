@@ -4,15 +4,15 @@ import android.location.Location;
 
 import com.google.firebase.firestore.GeoPoint;
 
-public class userprofile {
+public class UserProfile {
 
     String id, name, smallDesc, photo1, photo2, photo3, photo4, photo5, photo6;
     String localitation;
     long lastCon;
 
-    public userprofile(){}
+    public UserProfile(){}
 
-    public userprofile(String id, String name, String location, String smallDesc, String photo1, String photo2, String photo3, String photo4, String photo5, String photo6, long lastCon) {
+    public UserProfile(String id, String name, String location, String smallDesc, String photo1, String photo2, String photo3, String photo4, String photo5, String photo6, long lastCon) {
         this.id = id;
         this.name = name;
         this.localitation = location;
@@ -26,7 +26,7 @@ public class userprofile {
         this.lastCon = lastCon;
     }
 
-    public userprofile(String all) {
+    public UserProfile(String all) {
 
     }
 

@@ -149,83 +149,84 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        LinearLayout linear = (LinearLayout)findViewById(R.id.linearLayoutMatch);
-        ImageView matchIMG = (ImageView) findViewById(R.id.imgMatchTransp);
-        DisplayMetrics dm = new DisplayMetrics();
-        WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
-        wm.getDefaultDisplay().getMetrics(dm);
-        int screenWidth = dm.widthPixels;
-        int screenHeight = dm.heightPixels;
+        if (selectedTab.equals(TAB_A)) {
+            LinearLayout linear = (LinearLayout) findViewById(R.id.linearLayoutMatch);
+            ImageView matchIMG = (ImageView) findViewById(R.id.imgMatchTransp);
+            DisplayMetrics dm = new DisplayMetrics();
+            WindowManager wm = (WindowManager) getApplicationContext().getSystemService(Context.WINDOW_SERVICE); // the results will be higher than using the activity context object or the getWindowManager() shortcut
+            wm.getDefaultDisplay().getMetrics(dm);
+            int screenWidth = dm.widthPixels;
+            int screenHeight = dm.heightPixels;
 
-        int X = (int) event.getX();
-        int Y = (int) event.getY();
-        int eventaction = event.getAction();
+            int X = (int) event.getX();
+            int Y = (int) event.getY();
+            int eventaction = event.getAction();
 
-        switch (eventaction) {
-            case MotionEvent.ACTION_DOWN:
-                xCordTouch = X;
-                yCordTouch = Y;
-                isTouch = true;
-                break;
+            switch (eventaction) {
+                case MotionEvent.ACTION_DOWN:
+                    xCordTouch = X;
+                    yCordTouch = Y;
+                    isTouch = true;
+                    break;
 
-            case MotionEvent.ACTION_MOVE:
-                if(xCordTouch < X && tipoMatch!=2 && (X-xCordTouch)>((screenHeight-Y)-yCordTouch)) {
-                    tipoMatch = 1;
-                    transp = ((float) X / (float) screenWidth) * 200;
-                    String hex = Integer.toHexString((int) transp-55);
-                    if(transp > 160){
-                        matchIMG.setImageResource(R.drawable.match_agree_nofx);
-                        matchIMG.setVisibility(View.VISIBLE);
-                    }else{
-                        matchIMG.setVisibility(View.INVISIBLE);
-                    }
-                    try {
-                        linear.setBackgroundColor(Color.parseColor("#" + hex + "4CC700"));
-                    } catch (Exception e) {
+                case MotionEvent.ACTION_MOVE:
+                    if (xCordTouch < X && tipoMatch != 2 && (X - xCordTouch) > ((screenHeight - Y) - yCordTouch)) {
+                        tipoMatch = 1;
+                        transp = ((float) X / (float) screenWidth) * 200;
+                        String hex = Integer.toHexString((int) transp - 55);
+                        if (transp > 160) {
+                            matchIMG.setImageResource(R.drawable.match_agree_nofx);
+                            matchIMG.setVisibility(View.VISIBLE);
+                        } else {
+                            matchIMG.setVisibility(View.INVISIBLE);
+                        }
+                        try {
+                            linear.setBackgroundColor(Color.parseColor("#" + hex + "4CC700"));
+                        } catch (Exception e) {
+                            linear.setBackgroundColor(Color.parseColor("#00000000"));
+                        }
+                    } else if (xCordTouch > X && tipoMatch != 1 && (X - xCordTouch) < ((screenHeight - Y) - yCordTouch)) {
+                        tipoMatch = 2;
+                        transp = (1 - ((float) X / (float) screenWidth)) * 200;
+                        String hex = Integer.toHexString((int) transp - 55);
+                        if (transp > 150) {
+                            matchIMG.setImageResource(R.drawable.match_noagree_nofx);
+                            matchIMG.setVisibility(View.VISIBLE);
+                        } else {
+                            matchIMG.setVisibility(View.INVISIBLE);
+                        }
+                        try {
+                            linear.setBackgroundColor(Color.parseColor("#" + hex + "C60000"));
+                        } catch (Exception e) {
+                            linear.setBackgroundColor(Color.parseColor("#00000000"));
+                        }
+                    } else if (xCordTouch > X && tipoMatch == 1) {
+                        linear.setBackgroundColor(Color.parseColor("#00000000"));
+                    } else if (xCordTouch < X && tipoMatch == 2) {
                         linear.setBackgroundColor(Color.parseColor("#00000000"));
                     }
-                }else if(xCordTouch > X && tipoMatch!=1 && (X-xCordTouch)<((screenHeight-Y)-yCordTouch)){
-                    tipoMatch = 2;
-                    transp = (1 - ((float) X / (float) screenWidth)) * 200;
-                    String hex = Integer.toHexString((int) transp-55);
-                    if(transp > 150){
-                        matchIMG.setImageResource(R.drawable.match_noagree_nofx);
-                        matchIMG.setVisibility(View.VISIBLE);
-                    }else{
-                        matchIMG.setVisibility(View.INVISIBLE);
-                    }
-                    try {
-                        linear.setBackgroundColor(Color.parseColor("#" + hex + "C60000"));
-                    } catch (Exception e) {
-                        linear.setBackgroundColor(Color.parseColor("#00000000"));
-                    }
-                }else if(xCordTouch > X && tipoMatch==1){
-                    linear.setBackgroundColor(Color.parseColor("#00000000"));
-                }else if(xCordTouch < X && tipoMatch==2){
-                    linear.setBackgroundColor(Color.parseColor("#00000000"));
-                }
-                break;
+                    break;
 
-            case MotionEvent.ACTION_UP:
-                linear.setBackgroundColor(Color.parseColor("#00000000"));
-                tipoMatch = 0;
-                matchIMG.setVisibility(View.INVISIBLE);
-                if (transp > 150) {
-                    if(xCordTouch > X && tipoMatch!=1 && (X-xCordTouch)<((screenHeight-Y)-yCordTouch))
-                    {
-                        ImageView buttonDislike = (ImageView) findViewById(R.id.imgButtonDislike);
-                        buttonDislike.performClick();
-                    }else{
-                        ImageView buttonLike = (ImageView) findViewById(R.id.imgButtonLike);
-                        buttonLike.performClick();
+                case MotionEvent.ACTION_UP:
+                    linear.setBackgroundColor(Color.parseColor("#00000000"));
+                    tipoMatch = 0;
+                    matchIMG.setVisibility(View.INVISIBLE);
+                    if (transp > 150) {
+                        if (xCordTouch > X && tipoMatch != 1 && (X - xCordTouch) < ((screenHeight - Y) - yCordTouch)) {
+                            ImageView buttonDislike = (ImageView) findViewById(R.id.imgButtonDislike);
+                            buttonDislike.performClick();
+                        } else {
+                            ImageView buttonLike = (ImageView) findViewById(R.id.imgButtonLike);
+                            buttonLike.performClick();
+                        }
+                        //Toast.makeText(MainActivity.this, "LEFT "+X, Toast.LENGTH_SHORT).show();
+                    } else {
+                        //Toast.makeText(MainActivity.this, "RIGHT "+X, Toast.LENGTH_SHORT).show();
                     }
-                    //Toast.makeText(MainActivity.this, "LEFT "+X, Toast.LENGTH_SHORT).show();
-                } else{
-                    //Toast.makeText(MainActivity.this, "RIGHT "+X, Toast.LENGTH_SHORT).show();
-                }
 
-                break;
+                    break;
+            }
         }
-        return true;
-    }
+            return true;
+        }
 }

@@ -6,9 +6,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="chat"
         android:textColor="@color/colorGris" />
+
+    <ListView
+        android:id="@+id/liga_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:divider="@color/fui_buttonShadow"
+        android:dividerHeight="1dp"
+        android:drawSelectorOnTop="true"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true"></ListView>
+
 </LinearLayout>

@@ -59,7 +59,7 @@ public class MatchActivity extends Fragment {
     ImageView matchIMG, photoRight, photoLeft, buttonLike, buttonDislike, buttonSuperLike;
     TextView numPhoto, nameProfile, smallDesc;
     LinearLayout photoMatch, buttonsMatch, progressBar;
-    List<userprofile> listUsers = new ArrayList<>(30);
+    List<UserProfile> listUsers = new ArrayList<>(30);
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     List<String> usersHistory = new ArrayList<String>();
     int indexElementCurrentUser;
@@ -544,7 +544,7 @@ public class MatchActivity extends Fragment {
                                                 if (document != null) {
                                                     //Solo valoramos a los usuarios que no los hemos valorado anteriormente
                                                     if(!usersHistory.contains(task.getResult().getId())){
-                                                        listUsers.add(new userprofile(task.getResult().getId(),task.getResult().getData().get("Name").toString(), task.getResult().getData().get("l").toString(), task.getResult().getData().get("SmallDesc").toString(),task.getResult().getData().get("Photo1").toString(),task.getResult().getData().get("Photo2").toString(),task.getResult().getData().get("Photo3").toString(),task.getResult().getData().get("Photo4").toString(),task.getResult().getData().get("Photo5").toString(),task.getResult().getData().get("Photo6").toString(),Long.parseLong(task.getResult().getData().get("LastConnection").toString())));
+                                                        listUsers.add(new UserProfile(task.getResult().getId(),task.getResult().getData().get("Name").toString(), task.getResult().getData().get("l").toString(), task.getResult().getData().get("SmallDesc").toString(),task.getResult().getData().get("Photo1").toString(),task.getResult().getData().get("Photo2").toString(),task.getResult().getData().get("Photo3").toString(),task.getResult().getData().get("Photo4").toString(),task.getResult().getData().get("Photo5").toString(),task.getResult().getData().get("Photo6").toString(),Long.parseLong(task.getResult().getData().get("LastConnection").toString())));
                                                         indexElementCurrentUser = listUsers.size()-1;
                                                         System.out.println("DocumentSnapshot data: " + listUsers.get(indexElementCurrentUser).getId().toString());
                                                         smallDesc.setText(listUsers.get(indexElementCurrentUser).getSmallDesc().toString());
