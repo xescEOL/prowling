@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rumba.objects.Contact;
 import com.rumba.prowling.R;
 
@@ -34,7 +35,7 @@ public class ListContactAdapter extends ArrayAdapter<Contact> {
 
         // Recuperamos los textView para después poder sacar datos pantalla
         TextView text = (TextView) listaPersonalizada.findViewById(R.id.textList);
-
+        ImageView imgThumb = (ImageView) listaPersonalizada.findViewById(R.id.imgContact);
         /* Al imageView le asignamos la imagen correspondiente siempre y cuando haya imagen
          * si no hay imagen, escondemos el imageView con visibility GONE
          * */
@@ -42,6 +43,11 @@ public class ListContactAdapter extends ArrayAdapter<Contact> {
 
         String name = partidosLiga.getName();
         text.setText(name);
+
+        String thumb = partidosLiga.getimageThumb();
+        Glide.with(getContext())
+                .load(thumb)
+                .into(imgThumb);
 
         return listaPersonalizada;
     }

@@ -402,12 +402,12 @@ public class MatchActivity extends Fragment {
                                 try {
                                     if (Integer.parseInt(task.getResult().getData().get("Tipo").toString()) == 1) {
 
-                                        Map<String, String> usersid = new HashMap<>();
-                                        usersid.put("0", uid);
-                                        usersid.put("1", uidMatch);
+                                        List usersID = new ArrayList();
+                                        usersID.add(uid);
+                                        usersID.add(uidMatch);
                                         Map<String, Object> matchDB = new HashMap<>();
                                         matchDB.put("lastUpdate", utilsFunc.getDateHourMinuteSecNow());
-                                        matchDB.put("usersID", usersid);
+                                        matchDB.put("usersID", usersID);
 
                                         dbFunc.matchCreateDB(matchDB);
                                         System.out.println("MAAAATCH");
@@ -472,6 +472,7 @@ public class MatchActivity extends Fragment {
         buttonDislike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String uidMatch = listUsers.get(indexElementCurrentUser).getId().toString();
                 LinearLayout linear = (LinearLayout)getActivity().findViewById(R.id.linearLayoutMatch);
                 String hex = Integer.toHexString((int) 145);
                 linear.setBackgroundColor(Color.parseColor("#" + hex + "C60000"));
@@ -480,10 +481,10 @@ public class MatchActivity extends Fragment {
                 matchLikeDislikeIMG.setVisibility(View.VISIBLE);
                 Map<String, Object> docData = new HashMap<>();
                 docData.put("Tipo", 0);
-                docData.put("Date", "20181031");
+                docData.put("Date", utilsFunc.getDateHourMinuteSecNow());
                 // Add a new document (asynchronously) in collection "cities" with id "LA"
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(uid).collection("Matches").document(listUsers.get(indexElementCurrentUser).getId().toString()).set(docData);
+                db.collection("users").document(uid).collection("Matches").document(uidMatch).set(docData);
                 listUsers.remove(indexElementCurrentUser);
                 indexElementCurrentUser = utilsFunc.lastConnectionIndex(listUsers);
                 //pausamos 4 decimas para que se vea lo que hemos escogido (foto con marca de agua verde)

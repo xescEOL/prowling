@@ -17,7 +17,7 @@
         app:cardUseCompatPadding="true">
 
         <ImageView
-            android:id="@+id/imgMatch"
+            android:id="@+id/imgContact"
             android:layout_width="40dp"
             android:layout_height="53dp"
             android:background="@color/colorThird"
