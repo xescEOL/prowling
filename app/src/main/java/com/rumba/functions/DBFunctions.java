@@ -41,7 +41,7 @@ public class DBFunctions extends Thread{
 
         boolean errCode = true;
 
-        public boolean SignUpUserDB(Map<String, Object> hMap, String uID) {
+        public boolean signUpUserDB(Map<String, Object> hMap, String uID) {
             errCode = false;
             // Add a new document with a generated ID
             try {
@@ -53,7 +53,19 @@ public class DBFunctions extends Thread{
             return errCode;
         }
 
-        public boolean SaveLocation(final Context cont) {
+    public boolean matchCreateDB(Map<String, Object> hMap) {
+        errCode = false;
+        // Add a new document with a generated ID
+        try {
+            db.collection("contacts").document()
+                    .set(hMap);
+        } catch (Exception e) {
+            errCode = true;
+        }
+        return errCode;
+    }
+
+        public boolean saveLocation(final Context cont) {
             final GPSTracker gps = new GPSTracker(cont);
             CollectionReference geoFirestoreRef = FirebaseFirestore.getInstance().collection("users");
             GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
@@ -75,7 +87,7 @@ public class DBFunctions extends Thread{
         }
 
 
-        public ArrayList<String> GetUsersRadiusLoc(double lat, double lng, double radius) {
+        public ArrayList<String> getUsersRadiusLoc(double lat, double lng, double radius) {
             CollectionReference geoFirestoreRef = FirebaseFirestore.getInstance().collection("users");
             GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
             GeoQuery geoQuery = geoFirestore.queryAtLocation(new GeoPoint(lat, lng), radius);

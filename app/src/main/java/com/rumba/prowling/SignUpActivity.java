@@ -151,10 +151,10 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                             userDB.put("Photo5", "_null#");
                             userDB.put("Photo6", "_null#");
                             userDB.put("LastConnection", utilsFunc.getDateHourMinuteSecNow());
-                            dbFunc.SaveLocation(context);
+                            dbFunc.saveLocation(context);
 
                             
-                            if(dbFunc.SignUpUserDB(userDB, user.getUid())){
+                            if(dbFunc.signUpUserDB(userDB, user.getUid())){
                                 Toast.makeText(SignUpActivity.this, "Error SignUp",Toast.LENGTH_SHORT).show();
                             }
                             Intent intent = new Intent(SignUpActivity.this, MainActivity.class);

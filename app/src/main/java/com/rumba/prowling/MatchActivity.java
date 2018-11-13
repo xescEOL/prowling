@@ -46,7 +46,9 @@ import org.imperiumlabs.geofirestore.GeoFirestore;
 import org.imperiumlabs.geofirestore.GeoQuery;
 import org.imperiumlabs.geofirestore.GeoQueryEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -388,8 +390,9 @@ public class MatchActivity extends Fragment {
         buttonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final String uidMatch = listUsers.get(indexElementCurrentUser).getId().toString();
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                DocumentReference docRef = db.collection("users").document(listUsers.get(indexElementCurrentUser).getId().toString()).collection("Matches").document(uid);
+                DocumentReference docRef = db.collection("users").document(uidMatch).collection("Matches").document(uid);
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -398,6 +401,15 @@ public class MatchActivity extends Fragment {
                             if (document != null) {
                                 try {
                                     if (Integer.parseInt(task.getResult().getData().get("Tipo").toString()) == 1) {
+
+                                        Map<String, String> usersid = new HashMap<>();
+                                        usersid.put("0", uid);
+                                        usersid.put("1", uidMatch);
+                                        Map<String, Object> matchDB = new HashMap<>();
+                                        matchDB.put("lastUpdate", utilsFunc.getDateHourMinuteSecNow());
+                                        matchDB.put("usersID", usersid);
+
+                                        dbFunc.matchCreateDB(matchDB);
                                         System.out.println("MAAAATCH");
                                         Toast.makeText(getContext(), "MAAAAATCH!!!!", Toast.LENGTH_SHORT).show();
                                     }
@@ -414,7 +426,7 @@ public class MatchActivity extends Fragment {
                 matchLikeDislikeIMG.setVisibility(View.VISIBLE);
                 Map<String, Object> docData = new HashMap<>();
                 docData.put("Tipo", 1);
-                docData.put("Date", "20181031");
+                docData.put("Date", utilsFunc.getDateHourMinuteSecNow());
                 // Add a new document (asynchronously) in collection "cities" with id "LA"
                 FirebaseFirestore db2 = FirebaseFirestore.getInstance();
                 db2.collection("users").document(uid).collection("Matches").document(listUsers.get(indexElementCurrentUser).getId().toString()).set(docData);
@@ -522,9 +534,10 @@ public class MatchActivity extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            usersHistory.add(uid);
                             //Añadimos los usuarios que ya hemos valorado anteriormente
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                usersHistory.add(document.getId().toString());
+                                    usersHistory.add(document.getId().toString());
                             }
                             System.out.println(" finish list history users");
 
