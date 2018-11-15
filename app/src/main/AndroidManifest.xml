@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.MIN_DISTANCE_CHANGE_FOR_UPDATES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.MIN_TIME_BW_UPDATES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
 
@@ -49,6 +50,12 @@
 
         <activity
             android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".AddPhotosActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
         </activity>
