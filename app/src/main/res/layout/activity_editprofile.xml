@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorThird">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="3">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="1"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+
+                        <ImageView
+                            android:id="@+id/imgRemove1"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="2"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+                        <ImageView
+                            android:id="@+id/imgRemove2"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="3"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+                        <ImageView
+                            android:id="@+id/imgRemove3"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:weightSum="3">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="4"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+                        <ImageView
+                            android:id="@+id/imgRemove4"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile5"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="5"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit5"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+                        <ImageView
+                            android:id="@+id/imgRemove5"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="6dp"
+                app:cardPreventCornerOverlap="false"
+                app:cardUseCompatPadding="true">
+
+                <ImageView
+                    android:id="@+id/imgProfile6"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorThird"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/np" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:id="@+id/txtNumPhoto6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="4dp"
+                        android:text="6"
+                        android:textColor="@color/colorPrimaryTrans"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom|end"
+                        android:gravity="bottom|right"
+                        android:orientation="horizontal"
+                        android:padding="5dp">
+
+                        <ImageView
+                            android:id="@+id/imgEdit6"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_catalunya"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_catalunya" />
+                        <ImageView
+                            android:id="@+id/imgRemove6"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:src="@drawable/flag_euskadi"
+                            android:visibility="gone"
+                            app:srcCompat="@drawable/flag_euskadi" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/butSalir"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="save" />
+    </LinearLayout>
+</LinearLayout>

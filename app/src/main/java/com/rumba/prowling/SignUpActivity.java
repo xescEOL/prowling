@@ -144,12 +144,7 @@ public class SignUpActivity extends AppCompatActivity implements LoaderCallbacks
                             Map<String, Object> userDB = new HashMap<>();
                             userDB.put("Name", mNameView.getText().toString());
                             userDB.put("SmallDesc", "_null#");
-                            userDB.put("Photo1", "_null#");
-                            userDB.put("Photo2", "_null#");
-                            userDB.put("Photo3", "_null#");
-                            userDB.put("Photo4", "_null#");
-                            userDB.put("Photo5", "_null#");
-                            userDB.put("Photo6", "_null#");
+                            userDB.put("NumPhotos", 0);
                             userDB.put("LastConnection", utilsFunc.getDateHourMinuteSecNow());
                             dbFunc.saveLocation(context);
 

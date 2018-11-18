@@ -70,13 +70,13 @@ public class StartActivity extends AppCompatActivity {
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 if (user != null) {
                     // User is signed in
-                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                    startActivity(intent);
                     Map<String, Object> docData = new HashMap<>();
                     docData.put("LastConnection", utilsFunc.getDateHourMinuteSecNow());
                     // Add a new document (asynchronously) in collection "cities" with id "LA"
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("users").document(user.getUid()).update(docData);
+                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                    startActivity(intent);
                     finish();
                 } else {
                     // User is signed out
