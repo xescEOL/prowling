@@ -1,12 +1,15 @@
 package com.rumba.prowling;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,31 +17,50 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.graphics.Matrix;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class EditProfileActivity extends AppCompatActivity {
+    private EditText etName;
+    private EditText etBirth;
+    private EditText etSmallDesc;
     private static int RESULT_LOAD_IMAGE = 1;
     private static final int PICK_FROM_GALLERY = 1;
     private int photonum;
     private StorageReference storageRef;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,10 +88,79 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageView imgEdit5 = (ImageView)findViewById(R.id.imgEdit5);
         ImageView imgEdit6 = (ImageView)findViewById(R.id.imgEdit6);
 
-        Button butSalir = (Button) findViewById(R.id.butSalir);
+        ImageView imgAddLang = (ImageView)findViewById(R.id.imgaddlanguage);
+
+        ImageView butSalir = (ImageView) findViewById(R.id.imgback);
+
+        etName = (EditText) findViewById(R.id.etName);
+        etBirth = (EditText) findViewById(R.id.etBirthday);
+        etSmallDesc = (EditText) findViewById(R.id.etShortDesc);
+
+
+        etName.setText(name);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference docRef = db.collection("users").document(uid);
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document != null) {
+                        try {
+                            etSmallDesc.setText(task.getResult().getData().get("SmallDesc").toString());
+
+                        } catch (Exception e) {
+                        }
+                    }
+                }
+            }});
+
 
         updateImgEditRemove();
 
+        etName.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Map<String, Object> docData = new HashMap<>();
+                docData.put("Name", etName.getText().toString());
+                // Add a new document (asynchronously) in collection "cities" with id "LA"
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(uid).update(docData);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+            }
+        });
+
+        etSmallDesc.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                Map<String, Object> docData = new HashMap<>();
+                docData.put("SmallDesc", etSmallDesc.getText().toString());
+                // Add a new document (asynchronously) in collection "cities" with id "LA"
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                db.collection("users").document(uid).update(docData);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+            }
+        });
 
         imgEdit1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,11 +282,51 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
+
+        imgAddLang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater li = LayoutInflater.from(getBaseContext());
+                View promptsView = li.inflate(R.layout.modal_languages, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        getBaseContext());
+
+                // set prompts.xml to alertdialog builder
+                alertDialogBuilder.setView(promptsView);
+
+                //final EditText userInput = (EditText) promptsView
+                        //.findViewById(R.id.editTextDialogUserInput);
+
+                // set dialog message
+                alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog,int id) {
+                                        // get user input and set it to result
+                                        // edit text
+                                        //result.setText(userInput.getText());
+                                    }
+                                })
+                        .setNegativeButton("Cancel",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
+            }
+        });
+
         butSalir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(EditProfileActivity.this, MainActivity.class);
-                startActivity(intent);
                 finish();
             }});
     }
@@ -209,30 +340,37 @@ public class EditProfileActivity extends AppCompatActivity {
             ImageView imageView = (ImageView) findViewById(R.id.imgProfile1);
             ImageView imgRemove = (ImageView)findViewById(R.id.imgRemove1);
             ImageView imgEdit = (ImageView)findViewById(R.id.imgEdit1);
+            TextView txtnum = (TextView)findViewById(R.id.txtNumPhoto1);
             switch (photonum) {
                 case 1:  imageView = (ImageView) findViewById(R.id.imgProfile1);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove1);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit1);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto1);
                     break;
                 case 2:  imageView = (ImageView) findViewById(R.id.imgProfile2);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove2);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit2);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto2);
                     break;
                 case 3:  imageView = (ImageView) findViewById(R.id.imgProfile3);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove3);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit3);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto3);
                     break;
                 case 4:  imageView = (ImageView) findViewById(R.id.imgProfile4);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove4);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit4);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto4);
                     break;
                 case 5:  imageView = (ImageView) findViewById(R.id.imgProfile5);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove5);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit5);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto5);
                     break;
                 case 6:  imageView = (ImageView) findViewById(R.id.imgProfile6);
                          imgRemove = (ImageView)findViewById(R.id.imgRemove6);
                          imgEdit = (ImageView)findViewById(R.id.imgEdit6);
+                         txtnum = (TextView)findViewById(R.id.txtNumPhoto6);
                     break;
 
             }
@@ -251,6 +389,7 @@ public class EditProfileActivity extends AppCompatActivity {
             }else{
                 imageView.setImageBitmap((Bitmap.createScaledBitmap(rotated, Math.round(600 / (rotated.getHeight() / (float) rotated.getWidth())), 600, false)));
             }
+            txtnum.setTextColor(Color.WHITE);
             imgEdit.setVisibility(View.GONE);
             imgRemove.setVisibility(View.VISIBLE);
             storageRef = FirebaseStorage.getInstance().getReference();
@@ -370,17 +509,18 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageView imgEdit4 = (ImageView)findViewById(R.id.imgEdit4);
         ImageView imgEdit5 = (ImageView)findViewById(R.id.imgEdit5);
         ImageView imgEdit6 = (ImageView)findViewById(R.id.imgEdit6);
-        if(imgRemove5.getVisibility() == View.VISIBLE){
+
+        if(imgRemove5.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit6.setVisibility(View.VISIBLE);
-        } else if(imgRemove4.getVisibility() == View.VISIBLE){
+        } else if(imgRemove4.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit5.setVisibility(View.VISIBLE);
-        } else if(imgRemove3.getVisibility() == View.VISIBLE){
+        } else if(imgRemove3.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit4.setVisibility(View.VISIBLE);
-        } else if(imgRemove2.getVisibility() == View.VISIBLE){
+        } else if(imgRemove2.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit3.setVisibility(View.VISIBLE);
-        } else if(imgRemove1.getVisibility() == View.VISIBLE){
+        } else if(imgRemove1.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit2.setVisibility(View.VISIBLE);
-        }else{
+        }else if(imgRemove6.getVisibility() != View.VISIBLE){
             imgEdit1.setVisibility(View.VISIBLE);
         }
     }

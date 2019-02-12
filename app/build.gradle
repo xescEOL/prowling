@@ -49,5 +49,7 @@ dependencies {
     implementation 'com.github.imperiumlabs:GeoFirestore-Android:v1.1.1'
     implementation 'com.google.api:api-common:1.1.0'
 
+    //implementation 'com.github.instacart.truetime-android:library-extension-rx:master-SNAPSHOT'
+
 }
 apply plugin: 'com.google.gms.google-services'

@@ -31,7 +31,7 @@ public class MainActivity extends FragmentActivity {
 
     private static TabHost mTabHost;
 
-    private MatchActivity fragment1;
+    private Fragment fragment1;
     private Fragment fragment2;
     private Fragment fragment3;
     private Fragment fragment4;
@@ -49,10 +49,9 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         System.out.println("MainActivity class - activity_main");
 
-        fragment1 = new MatchActivity();
-        fragment2 = new LocationActivity();
+        fragment1 = new ConfActivity();
+        fragment2 = new PChatActivity();
         fragment3 = new ChatActivity();
-        fragment4 = new ConfActivity();
 
         mTabHost = (TabHost) findViewById(android.R.id.tabhost);
         mTabHost.setOnTabChangedListener(listener);
@@ -71,7 +70,7 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_A, R.drawable.tabwidget_match));
+        spec.setIndicator(createTabView(TAB_A, R.drawable.tabwidget_profile));
         mTabHost.addTab(spec);
 
         spec = mTabHost.newTabSpec(TAB_B);
@@ -83,7 +82,7 @@ public class MainActivity extends FragmentActivity {
 
         });
 
-        spec.setIndicator(createTabView(TAB_B, R.drawable.tabwidget_location));
+        spec.setIndicator(createTabView(TAB_B, R.drawable.tabwidget_chat));
         mTabHost.addTab(spec);
 
         spec = mTabHost.newTabSpec(TAB_C);
@@ -92,17 +91,8 @@ public class MainActivity extends FragmentActivity {
                 return findViewById(android.R.id.tabcontent);
             }
         });
-        spec.setIndicator(createTabView(TAB_C, R.drawable.tabwidget_chat));
+        spec.setIndicator(createTabView(TAB_C, R.drawable.tabwidget_chats));
 
-        mTabHost.addTab(spec);
-
-        spec = mTabHost.newTabSpec(TAB_D);
-        spec.setContent(new TabHost.TabContentFactory() {
-            public View createTabContent(String tag) {
-                return findViewById(android.R.id.tabcontent);
-            }
-        });
-        spec.setIndicator(createTabView(TAB_D, R.drawable.tabwidget_conf));
         mTabHost.addTab(spec);
 
         mTabHost.setCurrentTab(0);
@@ -147,7 +137,7 @@ public class MainActivity extends FragmentActivity {
         return view;
     }
 
-    @Override
+   /* @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (selectedTab.equals(TAB_A)) {
             LinearLayout linear = (LinearLayout) findViewById(R.id.linearLayoutMatch);
@@ -228,5 +218,5 @@ public class MainActivity extends FragmentActivity {
             }
         }
             return true;
-        }
+        }*/
 }

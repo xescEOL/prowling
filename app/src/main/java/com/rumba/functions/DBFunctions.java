@@ -53,6 +53,18 @@ public class DBFunctions extends Thread{
             return errCode;
         }
 
+    public boolean sendMsgDB(Map<String, Object> hMap, String uID) {
+        errCode = false;
+        // Add a new document with a generated ID
+        try {
+            db.collection("PChat").document(uID)
+                    .set(hMap);
+        } catch (Exception e) {
+            errCode = true;
+        }
+        return errCode;
+    }
+
     public boolean matchCreateDB(Map<String, Object> hMap) {
         errCode = false;
         // Add a new document with a generated ID
@@ -85,6 +97,28 @@ public class DBFunctions extends Thread{
             }
             return errCode;
         }
+
+    public boolean saveLocationMessage(final Context cont, String docUID) {
+        final GPSTracker gps = new GPSTracker(cont);
+        CollectionReference geoFirestoreRef = FirebaseFirestore.getInstance().collection("PChat");
+        GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
+        errCode = false;
+        try {
+            //geoFirestore.setLocation(docUID, new GeoPoint(gps.latitude, gps.longitude), new GeoFirestore.CompletionListener() {
+            geoFirestore.setLocation(docUID, new GeoPoint(41.4797800, 2.3188000), new GeoFirestore.CompletionListener() {
+                @Override
+                public void onComplete(Exception exception) {
+
+                    if (exception == null) {
+                        System.out.println("Location saved on server successfully!");
+                    }
+                }
+            });
+        } catch (Exception e) {
+            errCode = true;
+        }
+        return errCode;
+    }
 
 
         public ArrayList<String> getUsersRadiusLoc(double lat, double lng, double radius) {

@@ -32,7 +32,6 @@ public class ConfActivity extends Fragment {
         Button btnlogout = (Button) view.findViewById(R.id.btnLogout);
         ImageView imgProf = (ImageView) view.findViewById(R.id.imgProfile);
         ImageView imgButEdit = (ImageView) view.findViewById(R.id.imgButtonEdit);
-        System.out.println("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + uid + "_1.jpg?alt=media");
         imgProf.setImageResource(R.drawable.np);
 
         Glide.with(getContext())
@@ -50,7 +49,6 @@ public class ConfActivity extends Fragment {
                 }).start();
                 Intent intent = new Intent(getContext(), EditProfileActivity.class);
                 startActivity(intent);
-                getActivity().finish();
             }
         });
 
