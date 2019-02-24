@@ -2,13 +2,21 @@ package com.rumba.functions;
 
 import android.content.Context;
 
+import com.google.firebase.database.ServerValue;
 import com.rumba.objects.UserProfile;
 
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+
+import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
@@ -29,15 +37,58 @@ public class UtilsFunctions {
         return returnInteger;
     }
 
+    public Date getTime() throws Exception {
+        String url = "https://time.is/Unix_time_now";
+        Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
+        System.out.println("doc " + doc.toString());
+        String[] tags = new String[] {
+                "div[id=time_section]",
+                "div[id=clock0_bg]"
+        };
+        Elements elements= doc.select(tags[0]);
+        for (int i = 0; i <tags.length; i++) {
+            elements = elements.select(tags[i]);
+        }
+        return new java.util.Date((long)Long.parseLong(elements.text() + "000")*1000);
+    }
+
     public String getDateHourMinuteSecNow() {
         String returnString = "201812010000";
-        java.util.Date fecha = new Date();
-        Date date = new Date();
-        DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+
+
+
+
+
+        /*String url = "https://time.is/Unix_time_now";
+        Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
+        String[] tags = new String[] {
+                "div[id=time_section]",
+                "div[id=clock0_bg]"
+        };
+        Elements elements= doc.select(tags[0]);
+        for (int i = 0; i <tags.length; i++) {
+            elements = elements.select(tags[i]);
+        }
+
+        System.out.println(Long.parseLong(elements.text() + "000"));
+
+
+
+
+*/
+
+
+
+
         try {
+            Date date = getTime();
+            DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             returnString = hourFormat.format(date);
         }catch (Exception e){
-
+            System.out.println("doc " + e.toString());
+            Date date = new Date();
+            DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+            returnString = hourFormat.format(date);
         }
         return returnString;
     }

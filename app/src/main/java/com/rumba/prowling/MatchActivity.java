@@ -33,10 +33,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.api.core.ApiFutures;
-import com.google.firestore.v1beta1.WriteResult;
 import com.rumba.functions.*;
 import com.rumba.objects.*;
 
