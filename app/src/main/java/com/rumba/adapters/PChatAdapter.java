@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,6 +23,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PChatAdapter extends ArrayAdapter<LinePChat> {
+    String txtMsg = "";
     public PChatAdapter(Context context, ArrayList<LinePChat> contactos){
         super(context, 0, contactos);
     }
@@ -44,17 +47,26 @@ public class PChatAdapter extends ArrayAdapter<LinePChat> {
         /* Al imageView le asignamos la imagen correspondiente siempre y cuando haya imagen
          * si no hay imagen, escondemos el imageView con visibility GONE
          * */
-
-        text.setText(linePChat.getName() + ": " + linePChat.getMsg());
+        txtMsg = linePChat.getMsg();
+        text.setText(Html.fromHtml("<font color='#EE0000'>" + linePChat.getName() + "</font>" + " " + txtMsg));
+        if(linePChat.getMyMsg()){
+            text.setText(Html.fromHtml("<font color='#EE0000'>" + linePChat.getName() + "</font><font color='#000000'>" + " " + linePChat.getMsg() + "</font>"));
+        }
         if(linePChat.getKm() < 1){
             DecimalFormat df = new DecimalFormat("#.0");
             km.setText(String.format( "%.1f", linePChat.getKm())+"km");
         }else {
             km.setText(String.valueOf(linePChat.getKm().intValue()) + "km");
         }
-        if(linePChat.getMyMsg()){
-            text.setTextColor(Color.RED);
-        }
+
+        /*LinearLayout layoutPline = (LinearLayout)listaPersonalizada.findViewById(R.id.layoutLineChat);
+
+        layoutPline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("apretaaaa " + txtMsg);
+            }
+        });*/
 
         String thumb = "https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + linePChat.getUid() + "_1.jpg?alt=media";
         Glide.with(getContext())

@@ -3,6 +3,7 @@ package com.rumba.functions;
 import android.content.Context;
 
 import com.google.firebase.database.ServerValue;
+import com.rumba.objects.LinePChat;
 import com.rumba.objects.UserProfile;
 
 
@@ -40,7 +41,6 @@ public class UtilsFunctions {
     public Date getTime() throws Exception {
         String url = "https://time.is/Unix_time_now";
         Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
-        System.out.println("doc " + doc.toString());
         String[] tags = new String[] {
                 "div[id=time_section]",
                 "div[id=clock0_bg]"
@@ -54,32 +54,6 @@ public class UtilsFunctions {
 
     public String getDateHourMinuteSecNow() {
         String returnString = "201812010000";
-
-
-
-
-
-        /*String url = "https://time.is/Unix_time_now";
-        Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
-        String[] tags = new String[] {
-                "div[id=time_section]",
-                "div[id=clock0_bg]"
-        };
-        Elements elements= doc.select(tags[0]);
-        for (int i = 0; i <tags.length; i++) {
-            elements = elements.select(tags[i]);
-        }
-
-        System.out.println(Long.parseLong(elements.text() + "000"));
-
-
-
-
-*/
-
-
-
-
         try {
             Date date = getTime();
             DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -109,32 +83,8 @@ public class UtilsFunctions {
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
         dist = dist * 1.609344;
-
-
-        System.out.println("Distancia de " + x1 + " " + x2 + " " + y1 + " " + y2 + " : " + dist);
+        //System.out.println("Distancia de " + x1 + " " + x2 + " " + y1 + " " + y2 + " : " + dist);
         return dist;
-
-
-        /*double dLat  = Math.toRadians((41.448106 - 41.3818));
-        double dLong = Math.toRadians((2.2464521 - 2.1685));
-
-
-        double a = haversin(dLat) + Math.cos(Math.toRadians(Math.toRadians(41.3818))) * Math.cos(Math.toRadians(41.448106)) * haversin(dLong);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));*/
-
-
-/*
-        double dLat  = Math.toRadians((x2 - x1));
-        double dLong = Math.toRadians((y2 - y1));
-
-
-        double a = haversin(dLat) + Math.cos(Math.toRadians(Math.toRadians(x1))) * Math.cos(Math.toRadians(x2)) * haversin(dLong);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-
-return (6371 * c);*/
-
-
-
     }
     private static final double deg2rad(double deg)
     {

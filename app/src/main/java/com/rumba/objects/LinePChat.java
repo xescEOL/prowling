@@ -1,16 +1,18 @@
 package com.rumba.objects;
 
-public class LinePChat {
+public class LinePChat implements Comparable {
     private String msg, name, uid;
     private Double km;
+    private long date;
     private boolean myMsg;
 
-    public LinePChat(String msg, String name, String uid, Double km, boolean myMsg){
+    public LinePChat(String msg, String name, String uid, Double km, boolean myMsg, long date){
         this.msg = msg;
         this.name = name;
         this.uid = uid;
         this.km = km;
         this.myMsg = myMsg;
+        this.date = date;
     }
 
     public String getMsg() {
@@ -45,6 +47,14 @@ public class LinePChat {
         this.km = km;
     }
 
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
+    }
+
     public boolean getMyMsg() {
         return myMsg;
     }
@@ -52,4 +62,12 @@ public class LinePChat {
     public void setMyMsg(boolean myMsg) {
         this.myMsg = myMsg;
     }
+
+    @Override
+    public int compareTo(Object o) {
+        long compareage=((LinePChat)o).getDate();
+        /* For Ascending order*/
+        return (int)(this.getDate()-compareage);
+    }
+
 }

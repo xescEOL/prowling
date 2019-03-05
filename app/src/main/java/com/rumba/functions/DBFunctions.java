@@ -104,8 +104,8 @@ public class DBFunctions extends Thread{
         GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
         errCode = false;
         try {
-            //geoFirestore.setLocation(docUID, new GeoPoint(gps.latitude, gps.longitude), new GeoFirestore.CompletionListener() {
-            geoFirestore.setLocation(docUID, new GeoPoint(41.4797800, 2.3188000), new GeoFirestore.CompletionListener() {
+            geoFirestore.setLocation(docUID, new GeoPoint(gps.latitude, gps.longitude), new GeoFirestore.CompletionListener() {
+            //geoFirestore.setLocation(docUID, new GeoPoint(41.4797800, 2.3188000), new GeoFirestore.CompletionListener() {
                 @Override
                 public void onComplete(Exception exception) {
 
