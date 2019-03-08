@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorThird"
+    android:orientation="vertical">
+
+    <ListView
+        android:id="@+id/linePChat_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1"
+        android:choiceMode="singleChoice"
+        android:divider="@color/fui_buttonShadow"
+        android:dividerHeight="1dp"
+        android:footerDividersEnabled="true"
+        android:headerDividersEnabled="true" />
+
+    <LinearLayout
+        android:id="@+id/layoutSend"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/etMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:maxLength="150"
+            android:text="Name"
+            android:textColor="@color/colorGris"/>
+
+        <TextView
+            android:id="@+id/lblKm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1km"
+            android:textColor="@color/browser_actions_title_color"
+            android:textSize="16sp"
+            android:focusable="false"/>
+
+        <Button
+            android:id="@+id/btnSendMsg"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Send"
+            android:focusable="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutKm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:focusable="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:focusable="false">
+
+            <SeekBar
+                android:id="@+id/barKm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:orientation="horizontal"
+            android:focusable="false">
+
+            <Button
+                android:id="@+id/btnKm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Km"
+                android:focusable="false"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>
