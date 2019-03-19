@@ -31,20 +31,26 @@ public class ListContactAdapter extends ArrayAdapter<Contact> {
         }
 
         // Localizamos la posición de los partidos dentro de la list para saber dónde debe ir
-        Contact partidosLiga = getItem(position);
+        Contact contactChat = getItem(position);
 
         // Recuperamos los textView para después poder sacar datos pantalla
-        TextView text = (TextView) listaPersonalizada.findViewById(R.id.textList);
+        TextView txtName = (TextView) listaPersonalizada.findViewById(R.id.txtName);
+        TextView txtMsg = (TextView) listaPersonalizada.findViewById(R.id.txtMsg);
         ImageView imgThumb = (ImageView) listaPersonalizada.findViewById(R.id.imgContact);
         /* Al imageView le asignamos la imagen correspondiente siempre y cuando haya imagen
          * si no hay imagen, escondemos el imageView con visibility GONE
          * */
 
 
-        String name = partidosLiga.getName();
-        text.setText(name);
+        String uid = contactChat.getUid();
+        txtName.setText(uid);
 
-        String thumb = partidosLiga.getimageThumb();
+        txtMsg.setText(contactChat.getMsg() + contactChat.getDate());
+
+        if(!contactChat.getTipo())
+            txtMsg.setText("NoTeu: " + txtMsg.getText());
+
+        String thumb =  "https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + uid + "_1.jpg?alt=media";
         Glide.with(getContext())
                 .load(thumb)
                 .into(imgThumb);

@@ -53,7 +53,7 @@ public class UtilsFunctions {
     }
 
     public String getDateHourMinuteSecNow() {
-        String returnString = "201812010000";
+        String returnString = "20181201000000";
         try {
             Date date = getTime();
             DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -64,6 +64,13 @@ public class UtilsFunctions {
             DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
             returnString = hourFormat.format(date);
         }
+        return returnString;
+    }
+
+    public String dateLongToDate(long date) {
+        String returnString = "00:00 01/01/2018";
+        String dateStr = Long.toString(date);
+        returnString = "" + dateStr.charAt(8) + dateStr.charAt(9) + ":" + dateStr.charAt(10) + dateStr.charAt(11) + " " + dateStr.charAt(6) + dateStr.charAt(7) + "/" + dateStr.charAt(4) + dateStr.charAt(5) + "/" + dateStr.charAt(0) + dateStr.charAt(1) + dateStr.charAt(2) + dateStr.charAt(3);
         return returnString;
     }
 

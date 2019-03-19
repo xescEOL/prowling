@@ -1,36 +1,46 @@
 package com.rumba.objects;
 
 public class Contact {
-    private String name, imageThumb;
-    private int tipo;
+    private String uid, msg;
+    private boolean tipo;
+    private long date;
 
-    public Contact(String name, String imageThumb, int tipo){
-        this.name = name;
-        this.imageThumb = imageThumb;
+    public Contact(String uid, boolean tipo, String msg, long date){
+        this.uid = uid;
         this.tipo = tipo;
+        this.msg = msg;
+        this.date = date;
     }
 
-    public String getName() {
-        return name;
+    public String getUid() {
+        return uid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
-    public String getimageThumb() {
-        return imageThumb;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setimageThumb(String imageThumb) {
-        this.imageThumb = imageThumb;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
-    public int getTipo() {
+    public boolean getTipo() {
         return tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(boolean tipo) {
         this.tipo = tipo;
+    }
+
+    public long getDate() {
+        return date;
+    }
+
+    public void setDate(long date) {
+        this.date = date;
     }
 }

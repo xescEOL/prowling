@@ -2,6 +2,7 @@ package com.rumba.prowling;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -162,7 +163,7 @@ public class PChatActivity extends Fragment {
                 new AsyncTask<Void, Void, String>() {
                     @Override
                     protected String doInBackground(Void... voids) {
-                        String dateNow = "201812010000";
+                        String dateNow = "20181201000000";
                         try {
                             String url = "https://time.is/Unix_time_now";
                             Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
@@ -219,6 +220,15 @@ public class PChatActivity extends Fragment {
             @Override
             public void onItemClick (AdapterView < ? > adapter, View view,int position, long arg){
                 System.out.println("List " + position);
+
+                Intent intent = new Intent(getActivity(), InfoMsgActivity.class);
+                intent.putExtra("uidIntent", listaPChatLine.get(position).getUid());
+                intent.putExtra("nameIntent", listaPChatLine.get(position).getName());
+                intent.putExtra("dateIntent", utilsFunc.dateLongToDate(listaPChatLine.get(position).getDate()));
+                intent.putExtra("kmIntent", listaPChatLine.get(position).getKm());
+                intent.putExtra("msgIntent", listaPChatLine.get(position).getMsg());
+                startActivity(intent);
+
 
             }
         });
