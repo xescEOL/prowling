@@ -1,5 +1,6 @@
 package com.rumba.prowling;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -59,11 +60,14 @@ public class ChatActivity extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 List<String> group = (List<String>) document.get("ids");
+                                String otheruid;
                                 boolean add = true;
                                 if(group.get(0).equals(uid)) {
+                                    otheruid = group.get(1);
                                     if (uidList.contains(group.get(1)))
                                         add = false;
                                 }else{
+                                    otheruid = group.get(0);
                                     if (uidList.contains(group.get(0)))
                                         add = false;
                                 }
@@ -73,7 +77,7 @@ public class ChatActivity extends Fragment {
                                     else
                                         uidList.add(group.get(0));
 
-                                    contactsItems.add(new Contact(document.getData().get("msg").toString(), group.get(0).equals(uid), document.getData().get("msg").toString(), Long.parseLong(document.getData().get("datetime").toString())));
+                                    contactsItems.add(new Contact(otheruid, group.get(0).equals(uid), document.getData().get("msg").toString(), Long.parseLong(document.getData().get("datetime").toString())));
                                     layoutLigaActivity.setAdapter(contactsItemsAdapter);
                                 }
                             }
@@ -86,6 +90,10 @@ public class ChatActivity extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> list, View v, int pos, long id) {
                 System.out.println(contactsItems.get(pos).getUid());
+                Intent intent = new Intent(getActivity(), PrivateChatActivity.class);
+                intent.putExtra("uid1", uid);
+                intent.putExtra("uid2", contactsItems.get(pos).getUid());
+                startActivity(intent);
             }
         });
     };

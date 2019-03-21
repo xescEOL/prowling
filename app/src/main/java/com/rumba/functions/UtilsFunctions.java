@@ -74,6 +74,14 @@ public class UtilsFunctions {
         return returnString;
     }
 
+    public String getNameRoom(String uid1, String uid2) {
+        String returnString = uid1 + "_" + uid2;
+        if(uid1.compareTo(uid2)>0){
+            returnString = uid2 + "_" + uid1;
+        }
+        return returnString;
+    }
+
     public List<Double> getCurrentLocation(final Context cont) {
         final GPSTracker gps = new GPSTracker(cont);
         List<Double> retLoc = new ArrayList<Double>();
