@@ -157,62 +157,64 @@ public class PChatActivity extends Fragment {
             @SuppressLint("StaticFieldLeak")
             @Override
             public void onClick(View v) {
-                //etMsg.setBackgroundColor(Color.GREEN);
-                etMsg.setEnabled(false);
-                etMsg.setTextColor(Color.GRAY);
-                new AsyncTask<Void, Void, String>() {
-                    @Override
-                    protected String doInBackground(Void... voids) {
-                        String dateNow = "20181201000000";
-                        try {
-                            String url = "https://time.is/Unix_time_now";
-                            Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
-                            String[] tags = new String[] {
-                                    "div[id=time_section]",
-                                    "div[id=clock0_bg]"
-                            };
-                            Elements elements= doc.select(tags[0]);
-                            for (int i = 0; i <tags.length; i++) {
-                                elements = elements.select(tags[i]);
-                            }
-
-
+                if(etMsg.getText().toString().toString().trim().length() != 0){
+                    //etMsg.setBackgroundColor(Color.GREEN);
+                    etMsg.setEnabled(false);
+                    etMsg.setTextColor(Color.GRAY);
+                    new AsyncTask<Void, Void, String>() {
+                        @Override
+                        protected String doInBackground(Void... voids) {
+                            String dateNow = "20181201000000";
                             try {
-                                Date date = new java.util.Date((long)Long.parseLong(elements.text())*1000);
-                                @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-                                dateNow = hourFormat.format(date);
-                            }catch (Exception e){
-                                System.out.println("doc " + e.toString());
-                                Date date = new Date();
-                                @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
-                                dateNow = hourFormat.format(date);
+                                String url = "https://time.is/Unix_time_now";
+                                Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
+                                String[] tags = new String[]{
+                                        "div[id=time_section]",
+                                        "div[id=clock0_bg]"
+                                };
+                                Elements elements = doc.select(tags[0]);
+                                for (int i = 0; i < tags.length; i++) {
+                                    elements = elements.select(tags[i]);
+                                }
+
+
+                                try {
+                                    Date date = new java.util.Date((long) Long.parseLong(elements.text()) * 1000);
+                                    @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                                    dateNow = hourFormat.format(date);
+                                } catch (Exception e) {
+                                    System.out.println("doc " + e.toString());
+                                    Date date = new Date();
+                                    @SuppressLint("SimpleDateFormat") DateFormat hourFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                                    dateNow = hourFormat.format(date);
+                                }
+                                return dateNow;
+                            } catch (Exception e) {
+                                e.printStackTrace();
                             }
+
                             return dateNow;
-                        } catch (Exception e) {
-                            e.printStackTrace();
                         }
 
-                        return dateNow;
-                    }
-                    @Override
-                    protected void onPostExecute(String dateNow) {
-                        Map<String, Object> userDB = new HashMap<>();
-                        userDB.put("Name", name);
-                        userDB.put("Msg", etMsg.getText().toString());
-                        userDB.put("Km", progressKm);
-                        if(dbFunc.sendMsgDB(userDB, dateNow + "_" + myUid)){
-                            Toast.makeText(getContext(), "Error send message",Toast.LENGTH_SHORT).show();
-                            etMsg.setEnabled(true);
-                        }else {
-                            dbFunc.saveLocationMessage(getContext(), dateNow + "_" + myUid);
-                            //etMsg.setBackgroundColor(Color.TRANSPARENT);
-                            etMsg.setEnabled(true);
-                            etMsg.setTextColor(getResources().getColor(R.color.colorGris));
-                            etMsg.setText("");
+                        @Override
+                        protected void onPostExecute(String dateNow) {
+                            Map<String, Object> userDB = new HashMap<>();
+                            userDB.put("Name", name);
+                            userDB.put("Msg", etMsg.getText().toString());
+                            userDB.put("Km", progressKm);
+                            if (dbFunc.sendMsgDB(userDB, dateNow + "_" + myUid)) {
+                                Toast.makeText(getContext(), "Error send message", Toast.LENGTH_SHORT).show();
+                                etMsg.setEnabled(true);
+                            } else {
+                                dbFunc.saveLocationMessage(getContext(), dateNow + "_" + myUid);
+                                //etMsg.setBackgroundColor(Color.TRANSPARENT);
+                                etMsg.setEnabled(true);
+                                etMsg.setTextColor(getResources().getColor(R.color.colorGris));
+                                etMsg.setText("");
+                            }
                         }
-                    }
-                }.execute();
-
+                    }.execute();
+                }
             }
         });
         
@@ -220,16 +222,17 @@ public class PChatActivity extends Fragment {
             @Override
             public void onItemClick (AdapterView < ? > adapter, View view,int position, long arg){
                 System.out.println("List " + position);
+                if(!listaPChatLine.get(position).getUid().equals(myUid)) {
 
-                Intent intent = new Intent(getActivity(), InfoMsgActivity.class);
-                intent.putExtra("uidIntent", listaPChatLine.get(position).getUid());
-                intent.putExtra("nameIntent", listaPChatLine.get(position).getName());
-                intent.putExtra("dateIntent", utilsFunc.dateLongToDate(listaPChatLine.get(position).getDate()));
-                intent.putExtra("kmIntent", listaPChatLine.get(position).getKm());
-                intent.putExtra("msgIntent", listaPChatLine.get(position).getMsg());
-                startActivity(intent);
+                    Intent intent = new Intent(getActivity(), InfoMsgActivity.class);
+                    intent.putExtra("uidIntent", listaPChatLine.get(position).getUid());
+                    intent.putExtra("nameIntent", listaPChatLine.get(position).getName());
+                    intent.putExtra("dateIntent", utilsFunc.dateLongToDate(listaPChatLine.get(position).getDate()));
+                    intent.putExtra("kmIntent", listaPChatLine.get(position).getKm());
+                    intent.putExtra("msgIntent", listaPChatLine.get(position).getMsg());
+                    startActivity(intent);
 
-
+                }
             }
         });
 

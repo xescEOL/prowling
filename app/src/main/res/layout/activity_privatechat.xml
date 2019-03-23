@@ -31,7 +31,7 @@
             android:layout_weight="9"
             android:ems="10"
             android:inputType="textPersonName"
-            android:maxLength="150"
+            android:maxLength="500"
             android:text="Name"
             android:textColor="@color/colorGris"/>
 

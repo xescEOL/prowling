@@ -9,6 +9,7 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
@@ -22,6 +23,7 @@ import com.rumba.functions.GPSTracker.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -52,6 +54,30 @@ public class DBFunctions extends Thread{
             }
             return errCode;
         }
+
+    public boolean sendPrivateMsg(Map<String, Object> hMap) {
+        errCode = false;
+        // Add a new document with a generated ID
+        try {
+            db.collection("PrivateChat").add(hMap);
+        } catch (Exception e) {
+            errCode = true;
+        }
+        return errCode;
+    }
+
+    public boolean insertFollowDB(String uid, String followUid) {
+        errCode = false;
+        // Add a new document with a generated ID
+        final Map<String, Object> addUserToArrayMap = new HashMap<>();
+        addUserToArrayMap.put("Following", FieldValue.arrayUnion(followUid));
+        try {
+            db.collection("users").document(uid).update(addUserToArrayMap);
+        } catch (Exception e) {
+            errCode = true;
+        }
+        return errCode;
+    }
 
     public boolean sendMsgDB(Map<String, Object> hMap, String uID) {
         errCode = false;
