@@ -2,24 +2,31 @@ package com.rumba.prowling;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -67,6 +74,8 @@ public class PChatActivity extends Fragment {
     int progressKm = 0;
     private DBFunctions dbFunc = new DBFunctions();
     private UtilsFunctions utilsFunc = new UtilsFunctions();
+    private View layout;
+    private int positionListTap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -89,6 +98,13 @@ public class PChatActivity extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         listaPChatLine.clear();
         itemsChatLine = new PChatAdapter(getContext(), listaPChatLine);
+
+        LayoutInflater inflater = (LayoutInflater) PChatActivity.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //Inflate the view from a predefined XML layout (no need for root id, using entire layout)
+        layout = inflater.inflate(R.layout.popup_pchattap,null);
+        float density = PChatActivity.this.getResources().getDisplayMetrics().density;
+// create a focusable PopupWindow with the given layout and correct size
+        final PopupWindow pw = new PopupWindow(layout, (int)density*240, (int)density*430, true);
 
         CollectionReference geoFirestoreRef = FirebaseFirestore.getInstance().collection("PChat");
         GeoFirestore geoFirestore = new GeoFirestore(geoFirestoreRef);
@@ -222,21 +238,50 @@ public class PChatActivity extends Fragment {
             @Override
             public void onItemClick (AdapterView < ? > adapter, View view,int position, long arg){
                 System.out.println("List " + position);
-                if(!listaPChatLine.get(position).getUid().equals(myUid)) {
-
-                    Intent intent = new Intent(getActivity(), InfoMsgActivity.class);
-                    intent.putExtra("uidIntent", listaPChatLine.get(position).getUid());
-                    intent.putExtra("nameIntent", listaPChatLine.get(position).getName());
-                    intent.putExtra("dateIntent", utilsFunc.dateLongToDate(listaPChatLine.get(position).getDate()));
-                    intent.putExtra("kmIntent", listaPChatLine.get(position).getKm());
-                    intent.putExtra("msgIntent", listaPChatLine.get(position).getMsg());
-                    startActivity(intent);
-
-                }
+                //if(!listaPChatLine.get(position).getUid().equals(myUid)) {
+                    pw.dismiss();
+                    pw.showAtLocation(layout, Gravity.CENTER, 0, 0);
+                    ((TextView) layout.findViewById(R.id.txtNamePop)).setText( listaPChatLine.get(position).getName());
+                    ((TextView) layout.findViewById(R.id.txtMsgPop)).setText( listaPChatLine.get(position).getMsg());
+                    Glide.with(getContext())
+                            .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + listaPChatLine.get(position).getUid() + "_1.jpg?alt=media")
+                            .into(((ImageView)layout.findViewById(R.id.imgPerfilPop)));
+                    positionListTap = position;
+               // }
             }
         });
 
+        //POPUP: Sortir si es prem fora de la finestra
+        pw.setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+        pw.setTouchInterceptor(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                    pw.dismiss();
+                    return true;
+                }
+                return false;
+            }
+        });
+        pw.setOutsideTouchable(true);
 
+        //POPUP: Sortir si es prem el buto sortir
+        ((Button) layout.findViewById(R.id.btnClose)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                pw.dismiss();
+            }
+        });
+
+        ((Button) layout.findViewById(R.id.btnProfilePop)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), InfoMsgActivity.class);
+                intent.putExtra("uidIntent", listaPChatLine.get(positionListTap).getUid());
+                intent.putExtra("nameIntent", listaPChatLine.get(positionListTap).getName());
+                intent.putExtra("dateIntent", utilsFunc.dateLongToDate(listaPChatLine.get(positionListTap).getDate()));
+                intent.putExtra("kmIntent", listaPChatLine.get(positionListTap).getKm());
+                intent.putExtra("msgIntent", listaPChatLine.get(positionListTap).getMsg());
+                startActivity(intent);
+            }
+        });
 
         lblKm.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -273,6 +318,7 @@ public class PChatActivity extends Fragment {
             }
         });
     };
+
 
 
     private void scrollMyListViewToBottom() {

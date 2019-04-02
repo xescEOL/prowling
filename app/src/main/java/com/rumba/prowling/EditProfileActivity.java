@@ -70,30 +70,18 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageView imgPhoto1 = (ImageView)findViewById(R.id.imgProfile1);
         ImageView imgPhoto2 = (ImageView)findViewById(R.id.imgProfile2);
         ImageView imgPhoto3 = (ImageView)findViewById(R.id.imgProfile3);
-        ImageView imgPhoto4 = (ImageView)findViewById(R.id.imgProfile4);
-        ImageView imgPhoto5 = (ImageView)findViewById(R.id.imgProfile5);
-        ImageView imgPhoto6 = (ImageView)findViewById(R.id.imgProfile6);
 
         ImageView imgRemove1 = (ImageView)findViewById(R.id.imgRemove1);
         ImageView imgRemove2 = (ImageView)findViewById(R.id.imgRemove2);
         ImageView imgRemove3 = (ImageView)findViewById(R.id.imgRemove3);
-        ImageView imgRemove4 = (ImageView)findViewById(R.id.imgRemove4);
-        ImageView imgRemove5 = (ImageView)findViewById(R.id.imgRemove5);
-        ImageView imgRemove6 = (ImageView)findViewById(R.id.imgRemove6);
 
         ImageView imgEdit1 = (ImageView)findViewById(R.id.imgEdit1);
         ImageView imgEdit2 = (ImageView)findViewById(R.id.imgEdit2);
         ImageView imgEdit3 = (ImageView)findViewById(R.id.imgEdit3);
-        ImageView imgEdit4 = (ImageView)findViewById(R.id.imgEdit4);
-        ImageView imgEdit5 = (ImageView)findViewById(R.id.imgEdit5);
-        ImageView imgEdit6 = (ImageView)findViewById(R.id.imgEdit6);
-
-        ImageView imgAddLang = (ImageView)findViewById(R.id.imgaddlanguage);
 
         ImageView butSalir = (ImageView) findViewById(R.id.imgback);
 
         etName = (EditText) findViewById(R.id.etName);
-        etBirth = (EditText) findViewById(R.id.etBirthday);
         etSmallDesc = (EditText) findViewById(R.id.etShortDesc);
 
 
@@ -225,104 +213,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }
         });
-        imgEdit4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photonum = 4;
-                try {
-                    if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(EditProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                    }else{
-                        Intent i = new Intent(
-                                Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                        startActivityForResult(i, RESULT_LOAD_IMAGE);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        imgEdit5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photonum = 5;
-                try {
-                    if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(EditProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                    }else{
-                        Intent i = new Intent(
-                                Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                        startActivityForResult(i, RESULT_LOAD_IMAGE);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-        imgEdit6.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                photonum = 6;
-                try {
-                    if (ActivityCompat.checkSelfPermission(EditProfileActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions(EditProfileActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                    }else{
-                        Intent i = new Intent(
-                                Intent.ACTION_PICK,
-                                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-                        startActivityForResult(i, RESULT_LOAD_IMAGE);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        imgAddLang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LayoutInflater li = LayoutInflater.from(getBaseContext());
-                View promptsView = li.inflate(R.layout.modal_languages, null);
-
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                        getBaseContext());
-
-                // set prompts.xml to alertdialog builder
-                alertDialogBuilder.setView(promptsView);
-
-                //final EditText userInput = (EditText) promptsView
-                        //.findViewById(R.id.editTextDialogUserInput);
-
-                // set dialog message
-                alertDialogBuilder
-                        .setCancelable(false)
-                        .setPositiveButton("OK",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog,int id) {
-                                        // get user input and set it to result
-                                        // edit text
-                                        //result.setText(userInput.getText());
-                                    }
-                                })
-                        .setNegativeButton("Cancel",
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-
-                // create alert dialog
-                AlertDialog alertDialog = alertDialogBuilder.create();
-
-                // show it
-                alertDialog.show();
-            }
-        });
 
         butSalir.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,22 +247,6 @@ public class EditProfileActivity extends AppCompatActivity {
                          imgEdit = (ImageView)findViewById(R.id.imgEdit3);
                          txtnum = (TextView)findViewById(R.id.txtNumPhoto3);
                     break;
-                case 4:  imageView = (ImageView) findViewById(R.id.imgProfile4);
-                         imgRemove = (ImageView)findViewById(R.id.imgRemove4);
-                         imgEdit = (ImageView)findViewById(R.id.imgEdit4);
-                         txtnum = (TextView)findViewById(R.id.txtNumPhoto4);
-                    break;
-                case 5:  imageView = (ImageView) findViewById(R.id.imgProfile5);
-                         imgRemove = (ImageView)findViewById(R.id.imgRemove5);
-                         imgEdit = (ImageView)findViewById(R.id.imgEdit5);
-                         txtnum = (TextView)findViewById(R.id.txtNumPhoto5);
-                    break;
-                case 6:  imageView = (ImageView) findViewById(R.id.imgProfile6);
-                         imgRemove = (ImageView)findViewById(R.id.imgRemove6);
-                         imgEdit = (ImageView)findViewById(R.id.imgEdit6);
-                         txtnum = (TextView)findViewById(R.id.txtNumPhoto6);
-                    break;
-
             }
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
@@ -417,9 +291,6 @@ public class EditProfileActivity extends AppCompatActivity {
                     ImageView imgRemove1 = (ImageView)findViewById(R.id.imgRemove1);
                     ImageView imgRemove2 = (ImageView)findViewById(R.id.imgRemove2);
                     ImageView imgRemove3 = (ImageView)findViewById(R.id.imgRemove3);
-                    ImageView imgRemove4 = (ImageView)findViewById(R.id.imgRemove4);
-                    ImageView imgRemove5 = (ImageView)findViewById(R.id.imgRemove5);
-                    ImageView imgRemove6 = (ImageView)findViewById(R.id.imgRemove6);
                     int cont = 0;
                     if(imgRemove1.getVisibility() == View.VISIBLE){
                         cont++;
@@ -428,15 +299,6 @@ public class EditProfileActivity extends AppCompatActivity {
                         cont++;
                     }
                     if(imgRemove3.getVisibility() == View.VISIBLE){
-                        cont++;
-                    }
-                    if(imgRemove4.getVisibility() == View.VISIBLE){
-                        cont++;
-                    }
-                    if(imgRemove5.getVisibility() == View.VISIBLE){
-                        cont++;
-                    }
-                    if(imgRemove6.getVisibility() == View.VISIBLE){
                         cont++;
                     }
                     updateImgEditRemove();
@@ -492,37 +354,21 @@ public class EditProfileActivity extends AppCompatActivity {
         ImageView imgPhoto1 = (ImageView)findViewById(R.id.imgProfile1);
         ImageView imgPhoto2 = (ImageView)findViewById(R.id.imgProfile2);
         ImageView imgPhoto3 = (ImageView)findViewById(R.id.imgProfile3);
-        ImageView imgPhoto4 = (ImageView)findViewById(R.id.imgProfile4);
-        ImageView imgPhoto5 = (ImageView)findViewById(R.id.imgProfile5);
-        ImageView imgPhoto6 = (ImageView)findViewById(R.id.imgProfile6);
 
         ImageView imgRemove1 = (ImageView)findViewById(R.id.imgRemove1);
         ImageView imgRemove2 = (ImageView)findViewById(R.id.imgRemove2);
         ImageView imgRemove3 = (ImageView)findViewById(R.id.imgRemove3);
-        ImageView imgRemove4 = (ImageView)findViewById(R.id.imgRemove4);
-        ImageView imgRemove5 = (ImageView)findViewById(R.id.imgRemove5);
-        ImageView imgRemove6 = (ImageView)findViewById(R.id.imgRemove6);
 
         ImageView imgEdit1 = (ImageView)findViewById(R.id.imgEdit1);
         ImageView imgEdit2 = (ImageView)findViewById(R.id.imgEdit2);
         ImageView imgEdit3 = (ImageView)findViewById(R.id.imgEdit3);
-        ImageView imgEdit4 = (ImageView)findViewById(R.id.imgEdit4);
-        ImageView imgEdit5 = (ImageView)findViewById(R.id.imgEdit5);
-        ImageView imgEdit6 = (ImageView)findViewById(R.id.imgEdit6);
 
-        if(imgRemove5.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
-            imgEdit6.setVisibility(View.VISIBLE);
-        } else if(imgRemove4.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
-            imgEdit5.setVisibility(View.VISIBLE);
-        } else if(imgRemove3.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
-            imgEdit4.setVisibility(View.VISIBLE);
-        } else if(imgRemove2.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
-            imgEdit3.setVisibility(View.VISIBLE);
-        } else if(imgRemove1.getVisibility() == View.VISIBLE && imgRemove6.getVisibility() != View.VISIBLE){
-            imgEdit2.setVisibility(View.VISIBLE);
-        }else if(imgRemove6.getVisibility() != View.VISIBLE){
+        if(imgRemove3.getVisibility() == View.VISIBLE){
             imgEdit1.setVisibility(View.VISIBLE);
+        } else if(imgRemove2.getVisibility() == View.VISIBLE && imgRemove3.getVisibility() != View.VISIBLE){
+            imgEdit3.setVisibility(View.VISIBLE);
+        } else if(imgRemove1.getVisibility() == View.VISIBLE && imgRemove3.getVisibility() != View.VISIBLE){
+            imgEdit2.setVisibility(View.VISIBLE);
         }
     }
-
 }

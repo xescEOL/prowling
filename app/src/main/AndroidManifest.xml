@@ -73,6 +73,11 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name=".ImageFullScreenActivity"
+            android:label="@string/app_name">
+        </activity>
+
     </application>
 
 </manifest>

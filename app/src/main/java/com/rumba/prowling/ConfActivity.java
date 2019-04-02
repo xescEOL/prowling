@@ -1,7 +1,6 @@
 package com.rumba.prowling;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -37,6 +36,16 @@ public class ConfActivity extends Fragment {
         Glide.with(getContext())
                 .load("https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + uid + "_1.jpg?alt=media")
                 .into(imgProf);
+
+        imgProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getContext(), ImageFullScreenActivity.class);
+                intent.putExtra("img", "https://firebasestorage.googleapis.com/v0/b/prowling-rumba.appspot.com/o/IMG_Perfil%2F" + uid + "_1.jpg?alt=media");
+                startActivity(intent);
+            }
+        });
 
         imgButEdit.setOnClickListener(new View.OnClickListener() {
             @Override
