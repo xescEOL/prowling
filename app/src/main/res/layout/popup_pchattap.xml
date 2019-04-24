@@ -37,7 +37,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/btnMencionarPop"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
@@ -48,7 +48,7 @@
             android:textSize="12sp" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnPrivatePop"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"

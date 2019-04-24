@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorThird"
@@ -18,39 +20,74 @@
         android:headerDividersEnabled="true" />
 
     <LinearLayout
-        android:id="@+id/layoutSend"
+        android:id="@+id/layoutButtom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="visible">
 
-        <EditText
-            android:id="@+id/etMsg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="9"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:maxLength="150"
-            android:text="Name"
-            android:textColor="@color/colorGris"/>
-
-        <TextView
-            android:id="@+id/lblKm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="1km"
-            android:textColor="@color/browser_actions_title_color"
-            android:textSize="16sp"
-            android:focusable="false"/>
-
-        <Button
-            android:id="@+id/btnSendMsg"
-            android:layout_width="55dp"
+        <LinearLayout
+            android:id="@+id/layoutMencionar"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Send"
-            android:focusable="false"/>
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <ImageButton
+                android:id="@+id/btnMencionarExit"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="0"
+                app:srcCompat="@android:drawable/btn_dialog" />
+
+            <TextView
+                android:id="@+id/txtMencionarName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textColor="@color/browser_actions_title_color"
+                tools:text="@" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutSend"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/etMsg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="9"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:maxLength="150"
+                android:text="Name"
+                android:textColor="@color/colorGris" />
+
+            <TextView
+                android:id="@+id/lblKm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:focusable="false"
+                android:text="1km"
+                android:textColor="@color/browser_actions_title_color"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnSendMsg"
+                android:layout_width="55dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:focusable="false"
+                android:text="Send" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout

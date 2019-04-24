@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,6 +47,7 @@ import org.imperiumlabs.geofirestore.GeoQueryEventListener;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.w3c.dom.Text;
 
 import java.net.URL;
 import java.text.DateFormat;
@@ -63,13 +65,15 @@ public class PChatActivity extends Fragment {
     PChatAdapter itemsChatLine;
     ListView listViewPChatActivity;
     EditText etMsg;
-    TextView lblKm;
-    LinearLayout laySend, layKm;
+    TextView lblKm, nameMencionar;
+    LinearLayout laySend, layKm, layoutMencionar;
     Button btnSend, btnKm;
+    ImageButton btnMencionarExit;
     SeekBar barKm;
     private FirebaseAuth mAuth;
     String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    String citeUid = "";
     List<Double> myLocation = new ArrayList<Double>();
     int progressKm = 0;
     private DBFunctions dbFunc = new DBFunctions();
@@ -89,11 +93,14 @@ public class PChatActivity extends Fragment {
         listViewPChatActivity = (ListView) getActivity().findViewById(R.id.linePChat_list_view);
         btnSend = (Button) view.findViewById(R.id.btnSendMsg);
         btnKm = (Button) view.findViewById(R.id.btnKm);
+        btnMencionarExit = (ImageButton) view.findViewById(R.id.btnMencionarExit);
         barKm = (SeekBar) view.findViewById(R.id.barKm);
         etMsg = (EditText) view.findViewById(R.id.etMsg);
         lblKm = (TextView) view.findViewById(R.id.lblKm);
+        nameMencionar = (TextView)view.findViewById(R.id.txtMencionarName);
         laySend = (LinearLayout) view.findViewById(R.id.layoutSend);
         layKm = (LinearLayout) view.findViewById(R.id.layoutKm);
+        layoutMencionar = (LinearLayout) view.findViewById(R.id.layoutMencionar);
         myLocation = utilsFunc.getCurrentLocation(getContext());
         mAuth = FirebaseAuth.getInstance();
         listaPChatLine.clear();
@@ -218,6 +225,9 @@ public class PChatActivity extends Fragment {
                             userDB.put("Name", name);
                             userDB.put("Msg", etMsg.getText().toString());
                             userDB.put("Km", progressKm);
+                            if(!citeUid.equals("")){
+                                userDB.put("Cite", citeUid);
+                            }
                             if (dbFunc.sendMsgDB(userDB, dateNow + "_" + myUid)) {
                                 Toast.makeText(getContext(), "Error send message", Toast.LENGTH_SHORT).show();
                                 etMsg.setEnabled(true);
@@ -280,6 +290,33 @@ public class PChatActivity extends Fragment {
                 intent.putExtra("kmIntent", listaPChatLine.get(positionListTap).getKm());
                 intent.putExtra("msgIntent", listaPChatLine.get(positionListTap).getMsg());
                 startActivity(intent);
+            }
+        });
+
+        ((Button) layout.findViewById(R.id.btnPrivatePop)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), PrivateChatActivity.class);
+                intent.putExtra("uid1", myUid);
+                intent.putExtra("uid2", listaPChatLine.get(positionListTap).getUid());
+                startActivity(intent);
+            }
+        });
+
+        ((Button) layout.findViewById(R.id.btnMencionarPop)).setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                citeUid = listaPChatLine.get(positionListTap).getUid();
+                nameMencionar.setText("@" + listaPChatLine.get(positionListTap).getName());
+                layoutMencionar.setVisibility(View.VISIBLE);
+                pw.dismiss();
+            }
+        });
+
+        btnMencionarExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                citeUid = "";
+                nameMencionar.setText("@");
+                layoutMencionar.setVisibility(View.GONE);
             }
         });
 
