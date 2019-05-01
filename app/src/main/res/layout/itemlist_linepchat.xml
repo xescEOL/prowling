@@ -12,57 +12,79 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingLeft="2dp">
 
         <android.support.v7.widget.CardView
             android:id="@+id/card1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:cardCornerRadius="6dp"
-            app:cardElevation="6dp"
+            app:cardElevation="5dp"
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true">
 
             <ImageView
                 android:id="@+id/imgContact"
-                android:layout_width="20dp"
-                android:layout_height="25dp"
+                android:layout_width="25dp"
+                android:layout_height="33dp"
                 android:background="@color/colorThird"
                 android:scaleType="centerCrop"
                 android:src="@drawable/chat_icon_active"
                 app:srcCompat="@drawable/chat_icon_active" />
         </android.support.v7.widget.CardView>
 
-        <TextView
-            android:id="@+id/txtKm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="-7dp"
-            android:layout_marginBottom="2dp"
-            android:ems="3"
-            android:foregroundGravity="top|center"
-            android:gravity="top|center_horizontal|center"
-            android:inputType="textPersonName"
-            android:text="9km"
-            android:textAlignment="center"
-            android:textColor="@color/colorPrimary"
-            android:textIsSelectable="false"
-            android:textSize="11sp"
-            tools:textIsSelectable="false" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textList"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
-        android:paddingRight="3dp"
-        android:text="Name SeconName"
-        android:textColor="@color/browser_actions_title_color"
-        android:textSize="16sp" />
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:paddingLeft="3dp"
+                android:paddingTop="2dp"
+                android:text="Name SeconName"
+                android:textColor="@color/browser_actions_title_color"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txtKm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|center_horizontal"
+                android:layout_marginRight="2dp"
+                android:ems="2"
+                android:foregroundGravity="top|center"
+                android:gravity="top|center_horizontal|center"
+                android:inputType="textPersonName"
+                android:text="9km"
+                android:textAlignment="center"
+                android:textColor="@color/colorPrimary"
+                android:textIsSelectable="false"
+                android:textSize="13sp"
+                tools:textIsSelectable="false" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/txtMsgPChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="3dp"
+            android:paddingRight="5dp"
+            android:paddingBottom="3dp"
+            android:text="TextView"
+            android:textColor="@color/browser_actions_text_color"
+            android:textSize="16sp" />
+    </LinearLayout>
 
 </LinearLayout>

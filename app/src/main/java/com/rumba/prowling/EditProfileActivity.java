@@ -14,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -21,10 +22,13 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.graphics.Matrix;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +45,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.rumba.adapters.SpinnerColorAdapter;
 
 import org.w3c.dom.Text;
 
@@ -52,15 +57,19 @@ import java.util.Map;
 
 
 public class EditProfileActivity extends AppCompatActivity {
+
     private EditText etName;
-    private EditText etBirth;
     private EditText etSmallDesc;
     private static int RESULT_LOAD_IMAGE = 1;
     private static final int PICK_FROM_GALLERY = 1;
     private int photonum;
     private StorageReference storageRef;
+    int[] spinnerImages;
+    Spinner mSpinner;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    int colorSpinnerIndex = 0;
+    private boolean isUserInteracting;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,6 +112,55 @@ public class EditProfileActivity extends AppCompatActivity {
                 }
             }});
 
+        //Spinner Color Switch
+        mSpinner = (Spinner) findViewById(R.id.spinColors);
+        spinnerImages = new int[]{R.drawable.colorblack
+                    , R.drawable.colorblue
+                    , R.drawable.colorgreen
+                    , R.drawable.colorpurple
+                    , R.drawable.colorred};
+
+        SpinnerColorAdapter mCustomAdapter = new SpinnerColorAdapter(EditProfileActivity.this, spinnerImages);
+        mSpinner.setAdapter(mCustomAdapter);
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                    if (isUserInteracting) {
+                        switch (i){
+                            case 0:
+                                etName.setTextColor(getResources().getColor(R.color.colorNameGrey));
+                                colorSpinnerIndex = 0;
+                                break;
+                            case 1:
+                                etName.setTextColor(getResources().getColor(R.color.colorNameBlue));
+                                colorSpinnerIndex = 1;
+                                break;
+                            case 2:
+                                etName.setTextColor(getResources().getColor(R.color.colorNameGreen));
+                                colorSpinnerIndex = 2;
+                                break;
+                            case 3:
+                                etName.setTextColor(getResources().getColor(R.color.colorNamePurple));
+                                colorSpinnerIndex = 3;
+                                break;
+                            case 4:
+                                etName.setTextColor(getResources().getColor(R.color.colorNameRed));
+                                colorSpinnerIndex = 4;
+                                break;
+                        }
+                        Map<String, Object> docData = new HashMap<>();
+                        docData.put("ColorName", colorSpinnerIndex);
+                        // Add a new document (asynchronously) in collection "cities" with id "LA"
+                        FirebaseFirestore db = FirebaseFirestore.getInstance();
+                        db.collection("users").document(uid).update(docData);
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+                }
+        });
+        //End Spinner Switch
 
         updateImgEditRemove();
 
@@ -370,5 +428,11 @@ public class EditProfileActivity extends AppCompatActivity {
         } else if(imgRemove1.getVisibility() == View.VISIBLE && imgRemove3.getVisibility() != View.VISIBLE){
             imgEdit2.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onUserInteraction() {
+        super.onUserInteraction();
+        isUserInteracting = true;
     }
 }

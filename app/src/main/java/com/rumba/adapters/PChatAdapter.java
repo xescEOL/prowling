@@ -41,23 +41,22 @@ public class PChatAdapter extends ArrayAdapter<LinePChat> {
         LinePChat linePChat = getItem(position);
 
         // Recuperamos los textView para después poder sacar datos pantalla
-        TextView text = (TextView) listaPersonalizada.findViewById(R.id.textList);
+        TextView name = (TextView) listaPersonalizada.findViewById(R.id.textList);
         TextView km = (TextView) listaPersonalizada.findViewById(R.id.txtKm);
+        TextView msg = (TextView) listaPersonalizada.findViewById(R.id.txtMsgPChat);
         ImageView imgThumb = (ImageView) listaPersonalizada.findViewById(R.id.imgContact);
         /* Al imageView le asignamos la imagen correspondiente siempre y cuando haya imagen
          * si no hay imagen, escondemos el imageView con visibility GONE
          * */
-        txtMsg = linePChat.getMsg();
-        text.setText(Html.fromHtml("<font color='#EE0000'>" + linePChat.getName() + "</font>" + " " + txtMsg));
-        if(linePChat.getMyMsg()){
-            text.setText(Html.fromHtml("<font color='#EE0000'>" + linePChat.getName() + "</font><font color='#000000'>" + " " + linePChat.getMsg() + "</font>"));
-        }
-        if(linePChat.getKm() < 1){
+        name.setText(linePChat.getName());
+        msg.setText(linePChat.getMsg());
+        km.setText(String.valueOf(linePChat.getKm().intValue()) + "km");
+        /*if(linePChat.getKm() < 1){
             DecimalFormat df = new DecimalFormat("#.0");
             km.setText(String.format( "%.1f", linePChat.getKm())+"km");
         }else {
             km.setText(String.valueOf(linePChat.getKm().intValue()) + "km");
-        }
+        }*/
 
         /*LinearLayout layoutPline = (LinearLayout)listaPersonalizada.findViewById(R.id.layoutLineChat);
 

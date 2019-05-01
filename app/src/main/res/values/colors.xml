@@ -10,4 +10,9 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorWhiteTrans">#96a6a6a6</color>
     <color name="colorWhiteGrey">#adffffff</color>
+    <color name="colorNameGrey">#3d3d3d</color>
+    <color name="colorNameBlue">#0048b4</color>
+    <color name="colorNameGreen">#219e00</color>
+    <color name="colorNamePurple">#a800c1</color>
+    <color name="colorNameRed">#b50000</color>
 </resources>

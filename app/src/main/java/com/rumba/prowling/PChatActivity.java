@@ -75,6 +75,7 @@ public class PChatActivity extends Fragment {
     String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     String citeUid = "";
     List<Double> myLocation = new ArrayList<Double>();
+    ImageView imgLoading;
     int progressKm = 0;
     private DBFunctions dbFunc = new DBFunctions();
     private UtilsFunctions utilsFunc = new UtilsFunctions();
@@ -100,11 +101,16 @@ public class PChatActivity extends Fragment {
         nameMencionar = (TextView)view.findViewById(R.id.txtMencionarName);
         laySend = (LinearLayout) view.findViewById(R.id.layoutSend);
         layKm = (LinearLayout) view.findViewById(R.id.layoutKm);
+        imgLoading = (ImageView) view.findViewById(R.id.imgLoading);
         layoutMencionar = (LinearLayout) view.findViewById(R.id.layoutMencionar);
         myLocation = utilsFunc.getCurrentLocation(getContext());
         mAuth = FirebaseAuth.getInstance();
         listaPChatLine.clear();
         itemsChatLine = new PChatAdapter(getContext(), listaPChatLine);
+
+        Glide.with(getContext())
+                .load(R.drawable.loadinggif)
+                .into(imgLoading);
 
         LayoutInflater inflater = (LayoutInflater) PChatActivity.this.getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         //Inflate the view from a predefined XML layout (no need for root id, using entire layout)
@@ -168,6 +174,7 @@ public class PChatActivity extends Fragment {
                 System.out.println("Ordenando lista");
                 Collections.sort(listaPChatLine);
                 listViewPChatActivity.setAdapter(itemsChatLine);
+                imgLoading.setVisibility(View.GONE);
             }
 
             @Override
