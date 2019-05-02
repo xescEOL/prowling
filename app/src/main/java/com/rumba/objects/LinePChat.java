@@ -5,14 +5,16 @@ public class LinePChat implements Comparable {
     private Double km;
     private long date;
     private boolean myMsg;
+    private int color;
 
-    public LinePChat(String msg, String name, String uid, Double km, boolean myMsg, long date){
+    public LinePChat(String msg, String name, String uid, Double km, boolean myMsg, long date, int color){
         this.msg = msg;
         this.name = name;
         this.uid = uid;
         this.km = km;
         this.myMsg = myMsg;
         this.date = date;
+        this.color = color;
     }
 
     public String getMsg() {
@@ -61,6 +63,14 @@ public class LinePChat implements Comparable {
 
     public void setMyMsg(boolean myMsg) {
         this.myMsg = myMsg;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     @Override

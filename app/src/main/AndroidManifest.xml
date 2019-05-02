@@ -18,6 +18,7 @@
 
 
     <application
+        android:name="com.rumba.functions.Prowling"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -77,6 +78,7 @@
             android:name=".ImageFullScreenActivity"
             android:label="@string/app_name">
         </activity>
+
 
     </application>
 

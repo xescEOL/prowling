@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,6 +52,26 @@ public class PChatAdapter extends ArrayAdapter<LinePChat> {
         name.setText(linePChat.getName());
         msg.setText(linePChat.getMsg());
         km.setText(String.valueOf(linePChat.getKm().intValue()) + "km");
+
+        switch (linePChat.getColor()){
+            case 0:
+                name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNameGrey));
+                break;
+            case 1:
+                name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNameBlue));
+                break;
+            case 2:
+                name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNameGreen));
+                break;
+            case 3:
+                name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNamePurple));
+                break;
+            case 4:
+                name.setTextColor(ContextCompat.getColor(getContext(), R.color.colorNameRed));
+                break;
+        }
+
+
         /*if(linePChat.getKm() < 1){
             DecimalFormat df = new DecimalFormat("#.0");
             km.setText(String.format( "%.1f", linePChat.getKm())+"km");

@@ -38,6 +38,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.rumba.adapters.PChatAdapter;
 import com.rumba.functions.DBFunctions;
+import com.rumba.functions.Prowling;
 import com.rumba.functions.UtilsFunctions;
 import com.rumba.objects.LinePChat;
 
@@ -74,6 +75,7 @@ public class PChatActivity extends Fragment {
     String myUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     String citeUid = "";
+    int userColorName = 0;
     List<Double> myLocation = new ArrayList<Double>();
     ImageView imgLoading;
     int progressKm = 0;
@@ -81,6 +83,7 @@ public class PChatActivity extends Fragment {
     private UtilsFunctions utilsFunc = new UtilsFunctions();
     private View layout;
     private int positionListTap;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -107,6 +110,36 @@ public class PChatActivity extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         listaPChatLine.clear();
         itemsChatLine = new PChatAdapter(getContext(), listaPChatLine);
+
+        if(((Prowling) getActivity().getApplicationContext()).getUserName() != null){
+            name = ((Prowling) getActivity().getApplicationContext()).getUserName();
+        }else{
+            name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            ((Prowling) getActivity().getApplicationContext()).setUserName(name);
+        }
+        if(((Prowling) getActivity().getApplicationContext()).getColorName() != 0){
+            userColorName = ((Prowling) getActivity().getApplicationContext()).getColorName();
+        }else{
+            DocumentReference docRef = db.collection("users").document(myUid);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            try {
+                                if(task.getResult().getData().get("ColorName") != null){
+                                    userColorName = task.getResult().getLong("ColorName").intValue();
+                                    ((Prowling) getActivity().getApplicationContext()).setColorName(userColorName);
+                                }else{
+                                    userColorName = 0;
+                                }
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }});
+        }
 
         Glide.with(getContext())
                 .load(R.drawable.loadinggif)
@@ -141,8 +174,12 @@ public class PChatActivity extends Fragment {
                                 if(uid.equals(myUid)){
                                     myMsg = true;
                                 }
+                                int colorName = 0;
+                                if(task.getResult().getLong("ColorName") != null){
+                                    colorName = task.getResult().getLong("ColorName").intValue();
+                                }
                                 List<Double> locationData = (List<Double>) document.get("l");
-                                listaPChatLine.add(new LinePChat(task.getResult().getData().get("Msg").toString(),task.getResult().getData().get("Name").toString(),uid,utilsFunc.calculateDistanceBetweenPoints(locationData.get(0),locationData.get(1), myLocation.get(0),myLocation.get(1)),myMsg,dateElement));
+                                listaPChatLine.add(new LinePChat(task.getResult().getData().get("Msg").toString(),task.getResult().getData().get("Name").toString(),uid,utilsFunc.calculateDistanceBetweenPoints(locationData.get(0),locationData.get(1), myLocation.get(0),myLocation.get(1)),myMsg,dateElement, colorName));
                                 //listaPChatLine.add(new LinePChat(task.getResult().getData().get("Msg").toString(),task.getResult().getData().get("Name").toString(),uid,utilsFunc.calculateDistanceBetweenPoints(locationData.get(0),locationData.get(1), 41.4667,2.2667),myMsg));
 
                                 scrollMyListViewToBottom();
@@ -232,6 +269,7 @@ public class PChatActivity extends Fragment {
                             userDB.put("Name", name);
                             userDB.put("Msg", etMsg.getText().toString());
                             userDB.put("Km", progressKm);
+                            userDB.put("ColorName", userColorName);
                             if(!citeUid.equals("")){
                                 userDB.put("Cite", citeUid);
                             }

@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -46,6 +47,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.rumba.adapters.SpinnerColorAdapter;
+import com.rumba.functions.Prowling;
+
+import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutures;
 
 import org.w3c.dom.Text;
 
@@ -64,10 +69,14 @@ public class EditProfileActivity extends AppCompatActivity {
     private static final int PICK_FROM_GALLERY = 1;
     private int photonum;
     private StorageReference storageRef;
+    private FirebaseAuth mAuth;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseUser user;
     int[] spinnerImages;
     Spinner mSpinner;
     String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+    String name = "";
+    String userDesc = "";
     int colorSpinnerIndex = 0;
     private boolean isUserInteracting;
     @Override
@@ -75,6 +84,91 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
         System.out.println("AddPhotos class - activity_editprofile");
+        mSpinner = (Spinner) findViewById(R.id.spinColors);
+        etName = (EditText) findViewById(R.id.etName);
+        etSmallDesc = (EditText) findViewById(R.id.etShortDesc);
+        //Rellenamos el spinner de colores (combobox)
+        spinnerImages = new int[]{R.drawable.colorblack
+                , R.drawable.colorblue
+                , R.drawable.colorgreen
+                , R.drawable.colorpurple
+                , R.drawable.colorred};
+
+        SpinnerColorAdapter mCustomAdapter = new SpinnerColorAdapter(EditProfileActivity.this, spinnerImages);
+        mSpinner.setAdapter(mCustomAdapter);
+
+        mAuth = FirebaseAuth.getInstance();
+        user = mAuth.getCurrentUser();
+        if(((Prowling)  getApplicationContext()).getUserName() != null){
+            name = ((Prowling)  getApplicationContext()).getUserName();
+        }else{
+            name = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
+            ((Prowling) getApplicationContext()).setUserName(name);
+        }
+        if(((Prowling)  getApplicationContext()).getColorName() != 0 && ((Prowling)  getApplicationContext()).getUserDesc() != null){
+            colorSpinnerIndex = ((Prowling)  getApplicationContext()).getColorName();
+            userDesc = ((Prowling)  getApplicationContext()).getUserDesc();
+            switch (colorSpinnerIndex){
+                case 0:
+                    etName.setTextColor(getResources().getColor(R.color.colorNameGrey));
+                    break;
+                case 1:
+                    etName.setTextColor(getResources().getColor(R.color.colorNameBlue));
+                    break;
+                case 2:
+                    etName.setTextColor(getResources().getColor(R.color.colorNameGreen));
+                    break;
+                case 3:
+                    etName.setTextColor(getResources().getColor(R.color.colorNamePurple));
+                    break;
+                case 4:
+                    etName.setTextColor(getResources().getColor(R.color.colorNameRed));
+                    break;
+            }
+            mSpinner.setSelection(colorSpinnerIndex);
+        }else{
+            DocumentReference docRef = db.collection("users").document(uid);
+            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document != null) {
+                            try {
+                                userDesc = task.getResult().getData().get("SmallDesc").toString();
+                                if(task.getResult().getData().get("ColorName") != null){
+                                    colorSpinnerIndex = task.getResult().getLong("ColorName").intValue();
+                                    ((Prowling) getApplicationContext()).setColorName(colorSpinnerIndex);
+                                }else{
+                                    colorSpinnerIndex = 0;
+                                    Map<String, Object> docData = new HashMap<>();
+                                    docData.put("ColorName", colorSpinnerIndex);
+                                    db.collection("users").document(uid).update(docData);
+                                }
+                                mSpinner.setSelection(colorSpinnerIndex);
+                                switch (colorSpinnerIndex){
+                                    case 0:
+                                        etName.setTextColor(getResources().getColor(R.color.colorNameGrey));
+                                        break;
+                                    case 1:
+                                        etName.setTextColor(getResources().getColor(R.color.colorNameBlue));
+                                        break;
+                                    case 2:
+                                        etName.setTextColor(getResources().getColor(R.color.colorNameGreen));
+                                        break;
+                                    case 3:
+                                        etName.setTextColor(getResources().getColor(R.color.colorNamePurple));
+                                        break;
+                                    case 4:
+                                        etName.setTextColor(getResources().getColor(R.color.colorNameRed));
+                                        break;
+                                }
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                }});
+        }
 
         ImageView imgPhoto1 = (ImageView)findViewById(R.id.imgProfile1);
         ImageView imgPhoto2 = (ImageView)findViewById(R.id.imgProfile2);
@@ -90,12 +184,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         ImageView butSalir = (ImageView) findViewById(R.id.imgback);
 
-        etName = (EditText) findViewById(R.id.etName);
-        etSmallDesc = (EditText) findViewById(R.id.etShortDesc);
-
-
         etName.setText(name);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("users").document(uid);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -105,7 +194,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     if (document != null) {
                         try {
                             etSmallDesc.setText(task.getResult().getData().get("SmallDesc").toString());
-
+                            ((Prowling) getApplicationContext()).setUserDesc(task.getResult().getData().get("SmallDesc").toString());
                         } catch (Exception e) {
                         }
                     }
@@ -113,16 +202,6 @@ public class EditProfileActivity extends AppCompatActivity {
             }});
 
         //Spinner Color Switch
-        mSpinner = (Spinner) findViewById(R.id.spinColors);
-        spinnerImages = new int[]{R.drawable.colorblack
-                    , R.drawable.colorblue
-                    , R.drawable.colorgreen
-                    , R.drawable.colorpurple
-                    , R.drawable.colorred};
-
-        SpinnerColorAdapter mCustomAdapter = new SpinnerColorAdapter(EditProfileActivity.this, spinnerImages);
-        mSpinner.setAdapter(mCustomAdapter);
-
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -154,6 +233,7 @@ public class EditProfileActivity extends AppCompatActivity {
                         // Add a new document (asynchronously) in collection "cities" with id "LA"
                         FirebaseFirestore db = FirebaseFirestore.getInstance();
                         db.collection("users").document(uid).update(docData);
+                        ((Prowling) getApplicationContext()).setColorName(colorSpinnerIndex);
                     }
                 }
                 @Override
@@ -168,11 +248,24 @@ public class EditProfileActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                Map<String, Object> docData = new HashMap<>();
+                /*Map<String, Object> docData = new HashMap<>();
                 docData.put("Name", etName.getText().toString());
                 // Add a new document (asynchronously) in collection "cities" with id "LA"
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                db.collection("users").document(uid).update(docData);
+                db.collection("users").document(uid).update(docData);*/
+                ((Prowling) getApplicationContext()).setUserName(etName.getText().toString());
+
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(etName.getText().toString())
+                        .build();
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                }
+                            }
+                        });
             }
 
             @Override
